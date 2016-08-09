@@ -27,7 +27,7 @@ function zeus_is_theme_activated() {
  */
 function zeus_autoloader( $dir ) {
 
-	$full_dir = zeus_THEME_DIR . $dir;
+	$full_dir = ZEUS_THEME_DIR . $dir;
 	foreach ( glob( $full_dir.'*.php' ) as $filename ) {
 		include $filename; }
 

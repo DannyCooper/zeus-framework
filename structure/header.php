@@ -2,113 +2,70 @@
 /**
  * Functions used to build .site-header
  *
- * @package zues
+ * @package zeus
  */
 
-if ( ! function_exists( 'zues_head' ) ) {
+if ( ! function_exists( 'zeus_head' ) ) {
 	/**
 	 * Out put the website head.
 	 */
-	function zues_head() {
+	function zeus_head() {
 
-		?>
+		$priority = array(
+			'template-parts/head.php',
+			'zeus-framework/structure/template-parts/head.php',
+		);
 
-		<!DOCTYPE html>
-		<html <?php echo get_language_attributes(); ?>>
-		<head>
-		<meta charset="<?php echo get_bloginfo( 'charset' ); ?>">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="profile" href="http://gmpg.org/xfn/11">
-		<link rel="pingback" href="<?php echo get_bloginfo( 'pingback_url' ) ?>">
-		<link rel="shortcut icon" href="<?php echo get_stylesheet_directory_uri() . '/favicon.ico' ?>" />
-
-		<?php
-
-		wp_head();
-		do_action( 'zues_head' );
-
-		?>
-
-		</head>
-
-		<?php
+		locate_template( $priority, true );
 
 	}
 }
 
-
-if ( ! function_exists( 'zues_site_header' ) ) {
-	/**
-	 * Output the site header.
-	 */
-	function zues_site_header() {
-
-		do_action('zues_header_before');
-
-		echo '<header '.zues_get_attr( 'header' ).' ">';
-			echo '<div class="wrap">';
-
-			/**			 *
-			 * @hooked zues_header_logo - 20
-			 */
-			do_action('zues_header');
-
-			echo '</div>';
-		echo '</header>';
-
-		do_action('zues_header_after');
-
-	}
-}
-
-if ( ! function_exists( 'zues_header_logo' ) ) {
+if ( ! function_exists( 'zeus_load_header_template' ) ) {
 	/**
 	 * Output the site title.
 	 */
-	function zues_header_logo() {
+	function zeus_load_header_template() {
 
-			 echo '<div  ' . zues_get_attr( 'branding' ) . ' >';
+		$priority = array(
+			'template-parts/header.php',
+			'zeus-framework/structure/template-parts/header.php',
+		);
 
-				if ( get_header_image() ) {
-					zues_image_header();
-				} else {
-					zues_text_header();
-				}
-
-			echo '</div>';
+		locate_template( $priority, true );
 
 	}
 }
 
-if ( ! function_exists( 'zues_text_header' ) ) {
+if ( ! function_exists( 'zeus_text_header' ) ) {
 	/**
 	 * Output the site title.
 	 */
-	function zues_text_header() {
+	function zeus_text_header() {
 
-		do_action( 'zues_logo_text' );
-
+		zeus_site_title();
+		echo '<p '. zeus_get_attr( 'site-description' ) . '>' . get_bloginfo( 'description' ) . '</p>';
 	}
 }
 
-if ( ! function_exists( 'zues_image_header' ) ) {
+if ( ! function_exists( 'zeus_image_header' ) ) {
 	/**
 	 * Output the header image.
 	 */
-	function zues_image_header() {
+	function zeus_image_header() {
 
 		echo '<a href="'. esc_url( home_url( '/' ) ) .'" rel="home">';
 			echo '<img src="'.get_header_image().'" width="'.esc_attr( get_custom_header()->width ) .'" height="'.  esc_attr( get_custom_header()->height ) .'" alt="">';
-			zues_site_title();
+			zeus_site_title();
 		echo '</a>';
 	}
 }
 
-if ( ! function_exists( 'zues_site_title' ) ) {
+if ( ! function_exists( 'zeus_site_title' ) ) {
 	/**
 	 * Check whether a h1 or h2 site title should be shown for SEO purposes.
 	 */
-	function zues_site_title() {
+	function zeus_site_title() {
 
 		$home_url = esc_url( home_url( '/' ) );
 		$blog_name = get_bloginfo( 'name' );
@@ -116,56 +73,45 @@ if ( ! function_exists( 'zues_site_title' ) ) {
 		$link = sprintf( '<a href="%1$s">%2$s</a>', $home_url, $blog_name );
 
 		if ( is_home() ) {
-			echo '<h1 '. zues_get_attr( 'site-title' ) . '>'. $link . '</h1>';
+			echo '<h1 '. zeus_get_attr( 'site-title' ) . '>'. $link . '</h1>';
 		} else {
-			echo '<h2 '. zues_get_attr( 'site-title' ) . '>'. $link . '</h2>';
+			echo '<h2 '. zeus_get_attr( 'site-title' ) . '>'. $link . '</h2>';
 		}
 
 	}
 }
 
-if ( ! function_exists( 'zues_site_description' ) ) {
-	/**
-	 * Output the site title.
-	 */
-	function zues_site_description() {
-
-		echo '<p '. zues_get_attr( 'site-description' ) . '>' . get_bloginfo( 'description' ) . '</p>';
-
-	}
-}
-
-if ( ! function_exists( 'zues_custom_header_setup' ) ) {
+if ( ! function_exists( 'zeus_custom_header_setup' ) ) {
 	/**
 	 * Set up the WordPress core custom header feature.
 	 *
-	 * @uses zues_header_style()
-	 * @uses zues_admin_header_style()
-	 * @uses zues_admin_header_image()
+	 * @uses zeus_header_style()
+	 * @uses zeus_admin_header_style()
+	 * @uses zeus_admin_header_image()
 	 */
-	function zues_custom_header_setup() {
-		add_theme_support( 'custom-header', apply_filters( 'zues_custom_header_args', array(
+	function zeus_custom_header_setup() {
+		add_theme_support( 'custom-header', apply_filters( 'zeus_custom_header_args', array(
 			'default-image'          => '',
 			'default-text-color'     => '000000',
 			'width'                  => 1000,
 			'height'                 => 250,
 			'flex-height'            => true,
-			'wp-head-callback'       => 'zues_header_style',
-			'admin-head-callback'    => 'zues_admin_header_style',
-			'admin-preview-callback' => 'zues_admin_header_image',
+			'wp-head-callback'       => 'zeus_header_style',
+			'admin-head-callback'    => 'zeus_admin_header_style',
+			'admin-preview-callback' => 'zeus_admin_header_image',
 		) ) );
 	}
 }
 
-add_action( 'after_setup_theme', 'zues_custom_header_setup' );
+add_action( 'after_setup_theme', 'zeus_custom_header_setup' );
 
-if ( ! function_exists( 'zues_header_style' ) ) {
+if ( ! function_exists( 'zeus_header_style' ) ) {
 	/**
 	 * Styles the header image and text displayed on the blog
 	 *
-	 * @see zues_custom_header_setup().
+	 * @see zeus_custom_header_setup().
 	 */
-	function zues_header_style() {
+	function zeus_header_style() {
 		$header_text_color = get_header_textcolor();
 
 		// If no custom options for text are set, let's bail
@@ -200,13 +146,13 @@ if ( ! function_exists( 'zues_header_style' ) ) {
 	}
 }
 
-if ( ! function_exists( 'zues_admin_header_style' ) ) {
+if ( ! function_exists( 'zeus_admin_header_style' ) ) {
 	/**
 	 * Styles the header image displayed on the Appearance > Header admin panel.
 	 *
-	 * @see zues_custom_header_setup().
+	 * @see zeus_custom_header_setup().
 	 */
-	function zues_admin_header_style() {
+	function zeus_admin_header_style() {
 	?>
 	<style type="text/css">
 		.appearance_page_custom-header #headimg {
@@ -228,13 +174,13 @@ if ( ! function_exists( 'zues_admin_header_style' ) ) {
 	}
 }
 
-if ( ! function_exists( 'zues_admin_header_image' ) ) {
+if ( ! function_exists( 'zeus_admin_header_image' ) ) {
 	/**
 	 * Custom header image markup displayed on the Appearance > Header admin panel.
 	 *
-	 * @see zues_custom_header_setup().
+	 * @see zeus_custom_header_setup().
 	 */
-	function zues_admin_header_image() {
+	function zeus_admin_header_image() {
 	?>
 	<div id="headimg">
 		<h1 class="displaying-header-text">
@@ -244,7 +190,7 @@ if ( ! function_exists( 'zues_admin_header_image' ) ) {
 		<?php if ( get_header_image() ) : ?>
 		<img src="<?php header_image(); ?>" alt="">
 		<?php endif; ?>
-	</div>
+	</div><!-- #heading -->
 <?php
 	}
 }

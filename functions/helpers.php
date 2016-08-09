@@ -1,8 +1,8 @@
 <?php
 /**
- * Zues helper functions
+ * Zeus helper functions
  *
- * @package zues
+ * @package zeus
  */
 
 /**
@@ -10,7 +10,7 @@
  *
  * @return bool
  */
-function zues_is_theme_activated() {
+function zeus_is_theme_activated() {
 	global $pagenow;
 
 	if ( is_admin() && isset( $_GET['activated'] ) && $pagenow === 'themes.php' ) {
@@ -25,9 +25,9 @@ function zues_is_theme_activated() {
  * @param string $dir
  * @todo check against child theme
  */
-function zues_autoloader( $dir ) {
+function zeus_autoloader( $dir ) {
 
-	$full_dir = THEME_DIR . $dir;
+	$full_dir = ZUES_THEME_DIR . $dir;
 	foreach ( glob( $full_dir.'*.php' ) as $filename ) {
 		include $filename; }
 
@@ -37,7 +37,7 @@ function zues_autoloader( $dir ) {
  * Check if sidebar is active, if it is then display it.
  * @param string $id
  */
-function zues_widget_area( $id ) {
+function zeus_widget_area( $id ) {
 
 	if ( is_active_sidebar( $id ) ) {
 		echo '<div class="widget-area '. $id .'">';

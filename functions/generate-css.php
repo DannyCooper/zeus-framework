@@ -2,10 +2,10 @@
 /**
  * Functions for outputting CSS.
  *
- * @package zues
+ * @package zeus
  */
 
-if ( ! function_exists( 'zues_generate_css' ) ) {
+if ( ! function_exists( 'zeus_generate_css' ) ) {
 	/**
 	 * Generate CSS code
 	 *
@@ -17,7 +17,7 @@ if ( ! function_exists( 'zues_generate_css' ) ) {
 	 * @param  boolean $echo     Option to echo or return generated CSS code.
 	 * @return string            Returned CSS code.
 	 */
-	function zues_generate_css( $selector, $style, $mod_name, $prefix = '', $postfix = '', $echo = true ) {
+	function zeus_generate_css( $selector, $style, $mod_name, $prefix = '', $postfix = '', $echo = true ) {
 
 		$return = '';
 

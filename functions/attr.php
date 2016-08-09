@@ -7,45 +7,48 @@
  * microdata while being forward compatible with the ever-changing Web.  Currently, the default microdata
  * vocabulary supported is Schema.org.
  *
- * @package    zues
+ * @package    zeus
  * @author     Justin Tadlock <justin@justintadlock.com>
+ * @copyright  Copyright (c) 2008 - 2015, Justin Tadlock
+ * @link       http://themehybrid.com/hybrid-core
+ * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
 
 // Attributes for major structural elements.
-add_filter( 'zues_attr_body',    'zues_attr_body',    5 );
-add_filter( 'zues_attr_header',  'zues_attr_header',  5 );
-add_filter( 'zues_attr_footer',  'zues_attr_footer',  5 );
-add_filter( 'zues_attr_content', 'zues_attr_content', 5, 2 );
-add_filter( 'zues_attr_sidebar', 'zues_attr_sidebar', 5, 2 );
-add_filter( 'zues_attr_menu',    'zues_attr_menu',    5, 2 );
+add_filter( 'zeus_attr_body',    'zeus_attr_body',    5 );
+add_filter( 'zeus_attr_header',  'zeus_attr_header',  5 );
+add_filter( 'zeus_attr_footer',  'zeus_attr_footer',  5 );
+add_filter( 'zeus_attr_content', 'zeus_attr_content', 5, 2 );
+add_filter( 'zeus_attr_sidebar', 'zeus_attr_sidebar', 5, 2 );
+add_filter( 'zeus_attr_menu',    'zeus_attr_menu',    5, 2 );
 
 // Header attributes.
-add_filter( 'zues_attr_head',             'zues_attr_head',             5 );
-add_filter( 'zues_attr_branding',         'zues_attr_branding',         5 );
-add_filter( 'zues_attr_site-title',       'zues_attr_site_title',       5 );
-add_filter( 'zues_attr_site-description', 'zues_attr_site_description', 5 );
+add_filter( 'zeus_attr_head',             'zeus_attr_head',             5 );
+add_filter( 'zeus_attr_branding',         'zeus_attr_branding',         5 );
+add_filter( 'zeus_attr_site-title',       'zeus_attr_site_title',       5 );
+add_filter( 'zeus_attr_site-description', 'zeus_attr_site_description', 5 );
 
 // Archive page header attributes.
-add_filter( 'zues_attr_archive-header',      'zues_attr_archive_header',      5 );
-add_filter( 'zues_attr_archive-title',       'zues_attr_archive_title',       5 );
-add_filter( 'zues_attr_archive-description', 'zues_attr_archive_description', 5 );
+add_filter( 'zeus_attr_archive-header',      'zeus_attr_archive_header',      5 );
+add_filter( 'zeus_attr_archive-title',       'zeus_attr_archive_title',       5 );
+add_filter( 'zeus_attr_archive-description', 'zeus_attr_archive_description', 5 );
 
 // Post-specific attributes.
-add_filter( 'zues_attr_post',            'zues_attr_post',            5 );
-add_filter( 'zues_attr_entry',           'zues_attr_post',            5 ); // Alternate for "post".
-add_filter( 'zues_attr_entry-title',     'zues_attr_entry_title',     5 );
-add_filter( 'zues_attr_entry-author',    'zues_attr_entry_author',    5 );
-add_filter( 'zues_attr_entry-published', 'zues_attr_entry_published', 5 );
-add_filter( 'zues_attr_entry-content',   'zues_attr_entry_content',   5 );
-add_filter( 'zues_attr_entry-summary',   'zues_attr_entry_summary',   5 );
-add_filter( 'zues_attr_entry-terms',     'zues_attr_entry_terms',     5, 2 );
+add_filter( 'zeus_attr_post',            'zeus_attr_post',            5 );
+add_filter( 'zeus_attr_entry',           'zeus_attr_post',            5 ); // Alternate for "post".
+add_filter( 'zeus_attr_entry-title',     'zeus_attr_entry_title',     5 );
+add_filter( 'zeus_attr_entry-author',    'zeus_attr_entry_author',    5 );
+add_filter( 'zeus_attr_entry-published', 'zeus_attr_entry_published', 5 );
+add_filter( 'zeus_attr_entry-content',   'zeus_attr_entry_content',   5 );
+add_filter( 'zeus_attr_entry-summary',   'zeus_attr_entry_summary',   5 );
+add_filter( 'zeus_attr_entry-terms',     'zeus_attr_entry_terms',     5, 2 );
 
 // Comment specific attributes.
-add_filter( 'zues_attr_comment',           'zues_attr_comment',           5 );
-add_filter( 'zues_attr_comment-author',    'zues_attr_comment_author',    5 );
-add_filter( 'zues_attr_comment-published', 'zues_attr_comment_published', 5 );
-add_filter( 'zues_attr_comment-permalink', 'zues_attr_comment_permalink', 5 );
-add_filter( 'zues_attr_comment-content',   'zues_attr_comment_content',   5 );
+add_filter( 'zeus_attr_comment',           'zeus_attr_comment',           5 );
+add_filter( 'zeus_attr_comment-author',    'zeus_attr_comment_author',    5 );
+add_filter( 'zeus_attr_comment-published', 'zeus_attr_comment_published', 5 );
+add_filter( 'zeus_attr_comment-permalink', 'zeus_attr_comment_permalink', 5 );
+add_filter( 'zeus_attr_comment-content',   'zeus_attr_comment_content',   5 );
 
 /**
  * Outputs an HTML element's attributes.
@@ -55,8 +58,8 @@ add_filter( 'zues_attr_comment-content',   'zues_attr_comment_content',   5 );
  * @param  array  $attr     Array of attributes to pass in (overwrites filters).
  * @return void
  */
-function zues_attr( $slug, $context = '', $attr = array() ) {
-	echo zues_get_attr( $slug, $context, $attr );
+function zeus_attr( $slug, $context = '', $attr = array() ) {
+	echo zeus_get_attr( $slug, $context, $attr );
 }
 
 /**
@@ -70,10 +73,10 @@ function zues_attr( $slug, $context = '', $attr = array() ) {
  * @param  array  $attr     Array of attributes to pass in (overwrites filters).
  * @return string
  */
-function zues_get_attr( $slug, $context = '', $attr = array() ) {
+function zeus_get_attr( $slug, $context = '', $attr = array() ) {
 
 	$out    = '';
-	$attr   = wp_parse_args( $attr, apply_filters( "zues_attr_{$slug}", array(), $context ) );
+	$attr   = wp_parse_args( $attr, apply_filters( "zeus_attr_{$slug}", array(), $context ) );
 
 	if ( empty( $attr ) ) {
 		$attr['class'] = $slug; }
@@ -92,7 +95,7 @@ function zues_get_attr( $slug, $context = '', $attr = array() ) {
  * @param  array $attr
  * @return array
  */
-function zues_attr_body( $attr ) {
+function zeus_attr_body( $attr ) {
 
 	$attr['class']     = join( ' ', get_body_class() );
 	$attr['dir']       = is_rtl() ? 'rtl' : 'ltr';
@@ -112,7 +115,7 @@ function zues_attr_body( $attr ) {
  * @param  array $attr
  * @return array
  */
-function zues_attr_header( $attr ) {
+function zeus_attr_header( $attr ) {
 
 	$attr['class']     = 'site-header';
 	$attr['role']      = 'banner';
@@ -128,7 +131,7 @@ function zues_attr_header( $attr ) {
  * @param  array $attr
  * @return array
  */
-function zues_attr_footer( $attr ) {
+function zeus_attr_footer( $attr ) {
 
 	$attr['class']     = 'site-footer';
 	$attr['role']      = 'contentinfo';
@@ -144,7 +147,7 @@ function zues_attr_footer( $attr ) {
  * @param  array $attr
  * @return array
  */
-function zues_attr_content( $attr, $context ) {
+function zeus_attr_content( $attr, $context ) {
 
 	$attr['class']    = 'content';
 	$attr['role']     = 'main';
@@ -168,7 +171,7 @@ function zues_attr_content( $attr, $context ) {
  * @param  string $context
  * @return array
  */
-function zues_attr_sidebar( $attr, $context ) {
+function zeus_attr_sidebar( $attr, $context ) {
 
 	$attr['class'] = 'sidebar';
 	$attr['role']  = 'complementary';
@@ -177,11 +180,11 @@ function zues_attr_sidebar( $attr, $context ) {
 
 		$attr['class'] .= " {$context}-sidebar";
 
-		$sidebar_name = zues_get_sidebar_name( $context );
+		$sidebar_name = zeus_get_sidebar_name( $context );
 
 		if ( $sidebar_name ) {
 			// Translators: The %s is the sidebar name. This is used for the 'aria-label' attribute.
-			$attr['aria-label'] = esc_attr( sprintf( _x( '%s Sidebar', 'sidebar aria label', 'zues' ), $sidebar_name ) );
+			$attr['aria-label'] = esc_attr( sprintf( _x( '%s Sidebar', 'sidebar aria label', 'zeus' ), $sidebar_name ) );
 		}
 	}
 
@@ -198,7 +201,7 @@ function zues_attr_sidebar( $attr, $context ) {
  * @param  string $context
  * @return array
  */
-function zues_attr_menu( $attr, $context ) {
+function zeus_attr_menu( $attr, $context ) {
 
 	$attr['class'] = 'menu';
 	$attr['role']  = 'navigation';
@@ -207,11 +210,11 @@ function zues_attr_menu( $attr, $context ) {
 
 		$attr['class'] .= " menu-{$context}";
 
-		$menu_name = zues_get_menu_location_name( $context );
+		$menu_name = zeus_get_menu_location_name( $context );
 
 		if ( $menu_name ) {
 			// Translators: The %s is the menu name. This is used for the 'aria-label' attribute.
-			$attr['aria-label'] = esc_attr( sprintf( _x( '%s Menu', 'nav menu aria label', 'zues' ), $menu_name ) );
+			$attr['aria-label'] = esc_attr( sprintf( _x( '%s Menu', 'nav menu aria label', 'zeus' ), $menu_name ) );
 		}
 	}
 
@@ -229,7 +232,7 @@ function zues_attr_menu( $attr, $context ) {
  * @param  array $attr
  * @return array
  */
-function zues_attr_head( $attr ) {
+function zeus_attr_head( $attr ) {
 
 	$attr['itemscope'] = 'itemscope';
 	$attr['itemtype']  = 'http://schema.org/WebSite';
@@ -243,7 +246,7 @@ function zues_attr_head( $attr ) {
  * @param  array $attr
  * @return array
  */
-function zues_attr_branding( $attr ) {
+function zeus_attr_branding( $attr ) {
 
 	$attr['class'] = 'site-branding';
 
@@ -256,7 +259,7 @@ function zues_attr_branding( $attr ) {
  * @param  array $attr
  * @return array
  */
-function zues_attr_site_title( $attr ) {
+function zeus_attr_site_title( $attr ) {
 
 	$attr['class']    = 'site-title';
 	$attr['itemprop'] = 'headline';
@@ -270,7 +273,7 @@ function zues_attr_site_title( $attr ) {
  * @param  array $attr
  * @return array
  */
-function zues_attr_site_description( $attr ) {
+function zeus_attr_site_description( $attr ) {
 
 	$attr['class']    = 'site-description';
 	$attr['itemprop'] = 'description';
@@ -286,7 +289,7 @@ function zues_attr_site_description( $attr ) {
  * @param  array $attr
  * @return array
  */
-function zues_attr_archive_header( $attr ) {
+function zeus_attr_archive_header( $attr ) {
 
 	$attr['class']     = 'archive-header';
 	$attr['itemscope'] = 'itemscope';
@@ -301,7 +304,7 @@ function zues_attr_archive_header( $attr ) {
  * @param  array $attr
  * @return array
  */
-function zues_attr_archive_title( $attr ) {
+function zeus_attr_archive_title( $attr ) {
 
 	$attr['class']     = 'archive-title';
 	$attr['itemprop']  = 'headline';
@@ -315,7 +318,7 @@ function zues_attr_archive_title( $attr ) {
  * @param  array $attr
  * @return array
  */
-function zues_attr_archive_description( $attr ) {
+function zeus_attr_archive_description( $attr ) {
 
 	$attr['class']     = 'archive-description';
 	$attr['itemprop']  = 'text';
@@ -331,7 +334,7 @@ function zues_attr_archive_description( $attr ) {
  * @param  array $attr
  * @return array
  */
-function zues_attr_post( $attr ) {
+function zeus_attr_post( $attr ) {
 
 	$post = get_post();
 
@@ -352,12 +355,6 @@ function zues_attr_post( $attr ) {
 		} elseif ( 'attachment' === get_post_type() && wp_attachment_is_image() ) {
 
 			$attr['itemtype'] = 'http://schema.org/ImageObject';
-		} elseif ( 'attachment' === get_post_type() && zues_attachment_is_audio() ) {
-
-			$attr['itemtype'] = 'http://schema.org/AudioObject';
-		} elseif ( 'attachment' === get_post_type() && zues_attachment_is_video() ) {
-
-			$attr['itemtype'] = 'http://schema.org/VideoObject';
 		} else {
 			$attr['itemtype']  = 'http://schema.org/CreativeWork';
 		}
@@ -376,7 +373,7 @@ function zues_attr_post( $attr ) {
  * @param  array $attr
  * @return array
  */
-function zues_attr_entry_title( $attr ) {
+function zeus_attr_entry_title( $attr ) {
 
 	$attr['class']    = 'entry-title';
 	$attr['itemprop'] = 'headline';
@@ -390,7 +387,7 @@ function zues_attr_entry_title( $attr ) {
  * @param  array $attr
  * @return array
  */
-function zues_attr_entry_author( $attr ) {
+function zeus_attr_entry_author( $attr ) {
 
 	$attr['class']     = 'entry-author';
 	$attr['itemprop']  = 'author';
@@ -406,14 +403,14 @@ function zues_attr_entry_author( $attr ) {
  * @param  array $attr
  * @return array
  */
-function zues_attr_entry_published( $attr ) {
+function zeus_attr_entry_published( $attr ) {
 
 	$attr['class']    = 'entry-published updated';
 	$attr['datetime'] = get_the_time( 'Y-m-d\TH:i:sP' );
 	$attr['itemprop'] = 'datePublished';
 
 	// Translators: Post date/time "title" attribute.
-	$attr['title']    = get_the_time( _x( 'l, F j, Y, g:i a', 'post time format', 'zues' ) );
+	$attr['title']    = get_the_time( _x( 'l, F j, Y, g:i a', 'post time format', 'zeus' ) );
 
 	return $attr;
 }
@@ -424,7 +421,7 @@ function zues_attr_entry_published( $attr ) {
  * @param  array $attr
  * @return array
  */
-function zues_attr_entry_content( $attr ) {
+function zeus_attr_entry_content( $attr ) {
 
 	$attr['class'] = 'entry-content';
 
@@ -441,7 +438,7 @@ function zues_attr_entry_content( $attr ) {
  * @param  array $attr
  * @return array
  */
-function zues_attr_entry_summary( $attr ) {
+function zeus_attr_entry_summary( $attr ) {
 
 	$attr['class']    = 'entry-summary';
 	$attr['itemprop'] = 'description';
@@ -456,7 +453,7 @@ function zues_attr_entry_summary( $attr ) {
  * @param  string $context
  * @return array
  */
-function zues_attr_entry_terms( $attr, $context ) {
+function zeus_attr_entry_terms( $attr, $context ) {
 
 	if ( ! empty( $context ) ) {
 
@@ -480,7 +477,7 @@ function zues_attr_entry_terms( $attr, $context ) {
  * @param  array $attr
  * @return array
  */
-function zues_attr_comment( $attr ) {
+function zeus_attr_comment( $attr ) {
 
 	$attr['id']    = 'comment-' . get_comment_ID();
 	$attr['class'] = join( ' ', get_comment_class() );
@@ -501,7 +498,7 @@ function zues_attr_comment( $attr ) {
  * @param  array $attr
  * @return array
  */
-function zues_attr_comment_author( $attr ) {
+function zeus_attr_comment_author( $attr ) {
 
 	$attr['class']     = 'comment-author';
 	$attr['itemprop']  = 'author';
@@ -517,13 +514,13 @@ function zues_attr_comment_author( $attr ) {
  * @param  array $attr
  * @return array
  */
-function zues_attr_comment_published( $attr ) {
+function zeus_attr_comment_published( $attr ) {
 
 	$attr['class']    = 'comment-published';
 	$attr['datetime'] = get_comment_time( 'Y-m-d\TH:i:sP' );
 
 	// Translators: Comment date/time "title" attribute.
-	$attr['title']    = get_comment_time( _x( 'l, F j, Y, g:i a', 'comment time format', 'zues' ) );
+	$attr['title']    = get_comment_time( _x( 'l, F j, Y, g:i a', 'comment time format', 'zeus' ) );
 	$attr['itemprop'] = 'datePublished';
 
 	return $attr;
@@ -535,7 +532,7 @@ function zues_attr_comment_published( $attr ) {
  * @param  array $attr
  * @return array
  */
-function zues_attr_comment_permalink( $attr ) {
+function zeus_attr_comment_permalink( $attr ) {
 
 	$attr['class']    = 'comment-permalink';
 	$attr['href']     = get_comment_link();
@@ -550,7 +547,7 @@ function zues_attr_comment_permalink( $attr ) {
  * @param  array $attr
  * @return array
  */
-function zues_attr_comment_content( $attr ) {
+function zeus_attr_comment_content( $attr ) {
 
 	$attr['class']    = 'comment-content';
 	$attr['itemprop'] = 'text';

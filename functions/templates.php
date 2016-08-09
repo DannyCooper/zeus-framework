@@ -1,8 +1,8 @@
 <?php
 /**
- * Zues template functions
+ * Zeus template functions
  *
- * @package zues
+ * @package zeus
  */
 
 /**
@@ -11,7 +11,7 @@
  * @return  array The list of templates.
  * @todo  check against child theme
  */
-function zues_get_headers() {
+function zeus_get_headers() {
 
 	require_once( ABSPATH . 'wp-admin/includes/file.php' );
 
@@ -51,7 +51,7 @@ function zues_get_headers() {
 	 *
 	 * @return  array The list of templates.
 	 */
-function zues_get_footers() {
+function zeus_get_footers() {
 
 	require_once( ABSPATH . 'wp-admin/includes/file.php' );
 

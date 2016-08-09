@@ -2,95 +2,74 @@
 /**
  * Filters used to modify theme output.
  *
- * @package zues
+ * @package zeus
  */
 
-if ( ! function_exists( 'zues_site_footer' ) ) {
+if ( ! function_exists( 'zeus_load_footer_template' ) ) {
 
 	/**
 	 * Output the footer widget areas
 	 */
-	function zues_site_footer() {
+	function zeus_load_footer_template() {
 
-		echo '<footer ' . zues_get_attr( 'footer' ) .'>';
+		$priority = array(
+			'template-parts/footer.php',
+			'zeus-framework/structure/template-parts/footer.php',
+		);
 
-			do_action( 'zues_footer_before' );
-
-			echo '<div class="wrap">';
-
-			/**
-			 * Zues footer hook
-			 *
-			 * @hooked zues_load_footer_template - 10
-			 */
-			do_action( 'zues_footer' );
-
-			echo '</div>';
-
-			do_action( 'zues_footer_after' );
-
-		echo '</footer>';
+		locate_template( $priority, true );
 	}
 }
 
-if ( ! function_exists( 'zues_load_footer_template' ) ) {
-
+if ( ! function_exists( 'zeus_sub_footer' ) ) {
 	/**
-	 * Output the footer widget areas
+	 * Output the subfooter
 	 */
-	function zues_load_footer_template() {
-
-		if (
-		 	   ! is_active_sidebar( 'footer-1' )
-			&& ! is_active_sidebar( 'footer-2' )
-			&& ! is_active_sidebar( 'footer-3' )
-			&& ! is_active_sidebar( 'footer-4' ) ) {
-			return;
-		}
-
-		 echo '<div class="footer-widgets">';
-				 zues_widget_area( 'footer-1' );
-				 zues_widget_area( 'footer-2' ); 
-				 zues_widget_area( 'footer-3' );
-				 zues_widget_area( 'footer-4' );
-		 echo '</div>';
-	}
-}
-
-if ( ! function_exists( 'zues_footer_attribution' ) ) {
-	/**
-	 * Output the footer attribution text, this can be overwritten using a filter (zues_footer_attribution).
-	 */
-	function zues_sub_footer() {
+	function zeus_sub_footer() {
 		echo '<div class="sub-footer">';
 			echo '<div class="wrap">';
-				do_action( 'zues_sub_footer' );
-			echo '</div>';
-		echo '</div>';
+				echo '<div class="sub-footer-inner">';
+					/**
+					 * Sub Footer Hook
+					 */
+					do_action( 'zeus_sub_footer' );
+				echo '</div><!-- .sub-footer-inner -->';
+			echo '</div><!-- .wrap -->';
+		echo '</div><!-- .sub-footer -->';
 	}
 }
 
-if ( ! function_exists( 'zues_footer_attribution' ) ) {
+if ( ! function_exists( 'zeus_footer_attribution' ) ) {
 	/**
-	 * Output the footer attribution text, this can be overwritten using a filter (zues_footer_attribution).
+	 * Output the footer attribution text, this can be overwritten using a filter (zeus_footer_attribution).
 	 */
-	function zues_footer_attribution() {
+	function zeus_footer_attribution() {
 
-		$footer_attribution = __( 'Powered by the <a href="http://olympusthemes.com">Zues Theme</a>.', 'zues' );
-		$filtered_footer_attribution = apply_filters( 'zues_footer_attribution', $footer_attribution );
+		$footer_attribution = __( 'Powered by the <a href="http://olympusthemes.com">Zeus Theme</a>.', 'zeus' );
+
+		/*
+		 * Returns footer attribution html
+		 *
+		 * Usage:
+		 * add_filter( 'zeus_footer_attribution', 'my_callback' );
+		 * function my_callback(){
+		 *     return '<a href="http://mywebsite.com">My Link</a>';
+		 * }
+		 */
+		$filtered_footer_attribution = apply_filters( 'zeus_footer_attribution', $footer_attribution );
 
 		echo '<span class="footer-attribution">'.wp_kses_post( $filtered_footer_attribution ).'</span>';
 
 	}
 }
 
-if ( ! function_exists( 'zues_footer_copyright' ) ) {
+if ( ! function_exists( 'zeus_footer_copyright' ) ) {
 	/**
-	 * Output the footer copyright text, this can be overwritten using a filter (zues_footer_copyright).
+	 * Output the footer copyright text, this can be overwritten using a filter (zeus_footer_copyright).
 	 */
-	function zues_footer_copyright() {
+	function zeus_footer_copyright() {
 
-		$text = __( 'Copyright &copy; %1$s <a href="%2$s">%3$s</a> &middot; All Rights Reserved.', 'zues' );
+		$text = __( 'Copyright &copy; %1$s <a href="%2$s">%3$s</a> &middot; All Rights Reserved.', 'zeus' );
 
 		$date = date( 'Y' );
 		$url = esc_url( home_url() );
@@ -98,18 +77,27 @@ if ( ! function_exists( 'zues_footer_copyright' ) ) {
 
 		$footer_copyright = sprintf( $text, $date, $url, $name );
 
-		$filtered_footer_copyright = apply_filters( 'zues_footer_copyright', $footer_copyright );
+		/*
+		 * Returns a footer copyright html
+		 *
+		 * Usage:
+		 * add_filter( 'zeus_footer_copyright', 'my_callback' );
+		 * function my_callback(){
+		 *     return 'Copyright &copy; My Website';
+		 * }
+		 */
+		$filtered_footer_copyright = apply_filters( 'zeus_footer_copyright', $footer_copyright );
 
 		echo '<span class="footer-copyright">'.wp_kses_post( $filtered_footer_copyright ).'</span>';
 
 	}
 }
 
-if ( ! function_exists( 'zues_wpfooter' ) ) {
+if ( ! function_exists( 'zeus_wpfooter' ) ) {
 	/**
 	 * Output the wp_footer function, required for plugins.
 	 */
-	function zues_wpfooter() {
+	function zeus_wpfooter() {
 
 		wp_footer();
 

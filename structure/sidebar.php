@@ -2,37 +2,46 @@
 /**
  * Filters used to modify theme output.
  *
- * @package zues
+ * @package zeus
  */
 
-if ( ! function_exists( 'zues_sidebar_primary' ) ) {
+if ( ! function_exists( 'zeus_sidebar_primary' ) ) {
 	/**
 	 * Output the primary sidebar and hooks.
 	 */
-	function zues_sidebar_primary() {
+	function zeus_sidebar_primary() {
 
-		echo '<aside '. zues_get_attr( 'sidebar', 'primary' ) . '">';
+		echo '<aside '. zeus_get_attr( 'sidebar', 'primary' ) . '">';
 
-			do_action( 'zues_sidebar_primary_before' );
+			/**
+			 * Fires before the sidebar
+			 */
+			do_action( 'zeus_sidebar_primary_before' );
 
-			do_action( 'zues_sidebar_primary' );
+			/**
+			 * Primary Sidebar Hook
+			 */
+			do_action( 'zeus_sidebar_primary' );
 
-			do_action( 'zues_sidebar_primary_after' );
+			/**
+			 * Fires after the sidebar
+			 */
+			do_action( 'zeus_sidebar_primary_after' );
 
-		echo '</aside>';
+		echo '</aside><!-- .sidebar-primary -->';
 
 	}
 }
 
-if ( ! function_exists( 'zues_build_sidebar' ) ) {
+if ( ! function_exists( 'zeus_build_sidebar' ) ) {
 	/**
 	 * Output the primary sidebar.
 	 */
-	function zues_build_sidebar() {
+	function zeus_build_sidebar() {
 
 		echo '<div class="sidebar-primary-inner">';
 			dynamic_sidebar( 'primary-sidebar' );
-		echo '</div>';
+		echo '</div><!-- .sidebar-primary-inner -->';
 
 	}
 }
@@ -47,7 +56,7 @@ if ( ! function_exists( 'zues_build_sidebar' ) ) {
  * @param  string $sidebar_id
  * @return string
  */
-function zues_get_sidebar_name( $sidebar_id ) {
+function zeus_get_sidebar_name( $sidebar_id ) {
 	global $wp_registered_sidebars;
 	return isset( $wp_registered_sidebars[ $sidebar_id ] ) ? $wp_registered_sidebars[ $sidebar_id ]['name'] : '';
 }

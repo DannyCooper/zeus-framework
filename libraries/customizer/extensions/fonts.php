@@ -15,9 +15,9 @@ if ( ! function_exists( 'customizer_library_get_font_choices' ) ) :
 	 * @return array    The fonts in value/label pairs.
 	 */
 	function customizer_library_get_all_fonts() {
-		$heading1       = array( 1 => array( 'label' => sprintf( '--- %s ---', __( 'Standard Fonts', 'zues' ) ) ) );
+		$heading1       = array( 1 => array( 'label' => sprintf( '--- %s ---', __( 'Standard Fonts', 'zeus' ) ) ) );
 		$standard_fonts = customizer_library_get_standard_fonts();
-		$heading2       = array( 2 => array( 'label' => sprintf( '--- %s ---', __( 'Google Fonts', 'zues' ) ) ) );
+		$heading2       = array( 2 => array( 'label' => sprintf( '--- %s ---', __( 'Google Fonts', 'zeus' ) ) ) );
 		$google_fonts   = customizer_library_get_google_fonts();
 
 		/**
@@ -123,16 +123,16 @@ if ( ! function_exists( 'customizer_library_get_google_font_subsets' ) ) :
 	 */
 	function customizer_library_get_google_font_subsets() {
 		return array(
-		'all'          => __( 'All', 'zues' ),
-		'cyrillic'     => __( 'Cyrillic', 'zues' ),
-		'cyrillic-ext' => __( 'Cyrillic Extended', 'zues' ),
-		'devanagari'   => __( 'Devanagari', 'zues' ),
-		'greek'        => __( 'Greek', 'zues' ),
-		'greek-ext'    => __( 'Greek Extended', 'zues' ),
-		'khmer'        => __( 'Khmer', 'zues' ),
-		'latin'        => __( 'Latin', 'zues' ),
-		'latin-ext'    => __( 'Latin Extended', 'zues' ),
-		'vietnamese'   => __( 'Vietnamese', 'zues' ),
+		'all'          => __( 'All', 'zeus' ),
+		'cyrillic'     => __( 'Cyrillic', 'zeus' ),
+		'cyrillic-ext' => __( 'Cyrillic Extended', 'zeus' ),
+		'devanagari'   => __( 'Devanagari', 'zeus' ),
+		'greek'        => __( 'Greek', 'zeus' ),
+		'greek-ext'    => __( 'Greek Extended', 'zeus' ),
+		'khmer'        => __( 'Khmer', 'zeus' ),
+		'latin'        => __( 'Latin', 'zeus' ),
+		'latin-ext'    => __( 'Latin Extended', 'zeus' ),
+		'vietnamese'   => __( 'Vietnamese', 'zeus' ),
 		);
 	}
 endif;
@@ -192,15 +192,15 @@ if ( ! function_exists( 'customizer_library_get_standard_fonts' ) ) :
 	function customizer_library_get_standard_fonts() {
 		return array(
 		'serif' => array(
-			'label' => _x( 'Serif', 'font style', 'zues' ),
+			'label' => _x( 'Serif', 'font style', 'zeus' ),
 			'stack' => 'Georgia,Times,"Times New Roman",serif',
 		),
 		'sans-serif' => array(
-			'label' => _x( 'Sans Serif', 'font style', 'zues' ),
+			'label' => _x( 'Sans Serif', 'font style', 'zeus' ),
 			'stack' => '"Helvetica Neue",Helvetica,Arial,sans-serif',
 		),
 		'monospace' => array(
-			'label' => _x( 'Monospaced', 'font style', 'zues' ),
+			'label' => _x( 'Monospaced', 'font style', 'zeus' ),
 			'stack' => 'Monaco,"Lucida Sans Typewriter","Lucida Typewriter","Courier New",Courier,monospace',
 		),
 		);

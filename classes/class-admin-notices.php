@@ -2,15 +2,13 @@
 /**
  * Class for displaying notices in wp-admin
  *
- * Learn more: http://codex.wordpress.org/Template_Hierarchy
- *
- * @package zues
+ * @package zeus
  */
 
 /**
  * Admin notice class
  */
-class Zues_Admin_Notice
+class Zeus_Admin_Notice
 {
 	/**
 	 * Notice ID

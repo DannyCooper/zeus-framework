@@ -146,7 +146,6 @@ if ( ! function_exists( 'zeus_content' ) ) {
 
 		the_content(
 				__( 'Continue reading&hellip;', 'zeus' )
-			)
 		);
 		wp_link_pages(
 			array(

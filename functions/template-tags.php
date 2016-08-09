@@ -37,15 +37,15 @@ function zeus_jetpack_setup() {
 	add_theme_support(
 		'infinite-scroll', array(
 		'container' => 'main',
-		'render'    => 'ZUES_CORE_infinite_scroll_render',
+		'render'    => 'zeus_CORE_infinite_scroll_render',
 		'footer'    => 'page',
 		)
 	);
-} // end function ZUES_CORE_jetpack_setup
+} // end function zeus_CORE_jetpack_setup
 add_action( 'after_setup_theme', 'zeus_jetpack_setup' );
 
 /**
- * Flush out the transients used in ZUES_CORE_categorized_blog.
+ * Flush out the transients used in zeus_CORE_categorized_blog.
  */
 function zeus_category_transient_flusher() {
 	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {

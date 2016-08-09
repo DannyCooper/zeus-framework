@@ -39,25 +39,25 @@ class Zeus_Framework {
 	function constants() {
 
 		/* Sets the framework version number. */
-		define( 'ZUES_FRAMEWORK_VERSION', '1.0.0' );
+		define( 'ZEUS_FRAMEWORK_VERSION', '1.0.0' );
 
 		/* Sets the path to the parent theme directory. */
-		define( 'ZUES_THEME_DIR', get_template_directory() );
+		define( 'ZEUS_THEME_DIR', get_template_directory() );
 
 		/* Sets the path to the parent theme directory URI. */
-		define( 'ZUES_THEME_URI', get_template_directory_uri() );
+		define( 'ZEUS_THEME_URI', get_template_directory_uri() );
 
 		/* Sets the path to the child theme directory. */
-		define( 'ZUES_CHILD_THEME_DIR', get_stylesheet_directory() );
+		define( 'ZEUS_CHILD_THEME_DIR', get_stylesheet_directory() );
 
 		/* Sets the path to the child theme directory URI. */
-		define( 'ZUES_CHILD_THEME_URI', get_stylesheet_directory_uri() );
+		define( 'ZEUS_CHILD_THEME_URI', get_stylesheet_directory_uri() );
 
 		/* Sets the path to the child theme directory. */
-		define( 'ZUES_FRAMEWORK_DIR', ZUES_THEME_DIR . '/zeus-framework' );
+		define( 'ZEUS_FRAMEWORK_DIR', ZEUS_THEME_DIR . '/zeus-framework' );
 
 		/* Sets the path to the child theme directory URI. */
-		define( 'ZUES_FRAMEWORK_URI', ZUES_THEME_URI . '/zeus-framework' );
+		define( 'ZEUS_FRAMEWORK_URI', ZEUS_THEME_URI . '/zeus-framework' );
 
 	}
 
@@ -66,15 +66,13 @@ class Zeus_Framework {
 	 */
 	function functions() {
 
-		include_once ZUES_FRAMEWORK_DIR . '/functions/template-tags.php';
-		include_once ZUES_FRAMEWORK_DIR . '/functions/widget-areas.php';
-		include_once ZUES_FRAMEWORK_DIR . '/functions/generate-css.php';
-		include_once ZUES_FRAMEWORK_DIR . '/functions/attr.php';
+		include_once ZEUS_FRAMEWORK_DIR . '/functions/template-tags.php';
+		include_once ZEUS_FRAMEWORK_DIR . '/functions/widget-areas.php';
+		include_once ZEUS_FRAMEWORK_DIR . '/functions/generate-css.php';
+		include_once ZEUS_FRAMEWORK_DIR . '/functions/attr.php';
 
-		include_once ZUES_FRAMEWORK_DIR . '/functions/templates.php';
-		include_once ZUES_FRAMEWORK_DIR . '/functions/helpers.php';
-
-		include_once ZUES_FRAMEWORK_DIR . '/libraries/customizer/customizer-library.php';
+		include_once ZEUS_FRAMEWORK_DIR . '/functions/templates.php';
+		include_once ZEUS_FRAMEWORK_DIR . '/functions/helpers.php';
 
 	}
 
@@ -83,18 +81,18 @@ class Zeus_Framework {
 	 */
 	function structure() {
 
-		include_once ZUES_FRAMEWORK_DIR . '/structure/wrapper.php';
-		include_once ZUES_FRAMEWORK_DIR . '/structure/general.php';
-		include_once ZUES_FRAMEWORK_DIR . '/structure/header.php';
-		include_once ZUES_FRAMEWORK_DIR . '/structure/primary-nav.php';
-		include_once ZUES_FRAMEWORK_DIR . '/structure/post.php';
-		include_once ZUES_FRAMEWORK_DIR . '/structure/page.php';
-		include_once ZUES_FRAMEWORK_DIR . '/structure/comments.php';
-		include_once ZUES_FRAMEWORK_DIR . '/structure/sidebar.php';
-		include_once ZUES_FRAMEWORK_DIR . '/structure/footer.php';
+		include_once ZEUS_FRAMEWORK_DIR . '/structure/wrapper.php';
+		include_once ZEUS_FRAMEWORK_DIR . '/structure/general.php';
+		include_once ZEUS_FRAMEWORK_DIR . '/structure/header.php';
+		include_once ZEUS_FRAMEWORK_DIR . '/structure/primary-nav.php';
+		include_once ZEUS_FRAMEWORK_DIR . '/structure/post.php';
+		include_once ZEUS_FRAMEWORK_DIR . '/structure/page.php';
+		include_once ZEUS_FRAMEWORK_DIR . '/structure/comments.php';
+		include_once ZEUS_FRAMEWORK_DIR . '/structure/sidebar.php';
+		include_once ZEUS_FRAMEWORK_DIR . '/structure/footer.php';
 
-		include_once ZUES_FRAMEWORK_DIR . '/structure/hooks.php';
-		include_once ZUES_FRAMEWORK_DIR . '/structure/filters.php';
+		include_once ZEUS_FRAMEWORK_DIR . '/structure/hooks.php';
+		include_once ZEUS_FRAMEWORK_DIR . '/structure/filters.php';
 
 		/**
 		 * Automatically load all widgets in specified directory
@@ -110,14 +108,14 @@ class Zeus_Framework {
 	 */
 	function styles() {
 
-		wp_enqueue_style( 'olympus-reset', ZUES_FRAMEWORK_URI . '/assets/css/normalize.css' );
-		wp_enqueue_style( 'olympus-base', ZUES_FRAMEWORK_URI . '/assets/css/base.css' );
+		wp_enqueue_style( 'olympus-reset', ZEUS_FRAMEWORK_URI . '/assets/css/normalize.css' );
+		wp_enqueue_style( 'olympus-base', ZEUS_FRAMEWORK_URI . '/assets/css/base.css' );
 
-		wp_enqueue_script( 'superfish', ZUES_FRAMEWORK_URI . '/assets/js/superfish.js', array( 'jquery' ), '', true );
-		wp_enqueue_script( 'tinynav', ZUES_FRAMEWORK_URI . '/assets/js/tinynav.js', array( 'jquery' ), '', true );
+		wp_enqueue_script( 'superfish', ZEUS_FRAMEWORK_URI . '/assets/js/superfish.js', array( 'jquery' ), '', true );
+		wp_enqueue_script( 'tinynav', ZEUS_FRAMEWORK_URI . '/assets/js/tinynav.js', array( 'jquery' ), '', true );
 
 		// Register Font Awesome incase we want to use it later
-		wp_register_style( 'font-awesome', ZUES_FRAMEWORK_URI . '/assets/css/font-awesome.css' );
+		wp_register_style( 'font-awesome', ZEUS_FRAMEWORK_URI . '/assets/css/font-awesome.css' );
 
 	}
 
@@ -126,24 +124,24 @@ class Zeus_Framework {
 	 */
 	function admin() {
 
-		if ( defined('USE_ZUES_ADMIN_NOTICES') ) {
+		if ( defined('USE_ZEUS_ADMIN_NOTICES') ) {
 
 			// Class for generating admin notices
-			include_once ZUES_FRAMEWORK_DIR . '/classes/class-admin-notices.php';
+			include_once ZEUS_FRAMEWORK_DIR . '/classes/class-admin-notices.php';
 
 		}
 
-		if ( defined('USE_ZUES_CUSTOMIZER') ) {
+		if ( defined('USE_ZEUS_CUSTOMIZER') ) {
 
 			// Class for required/recommend plugin notification and installation.
-			include_once ZUES_FRAMEWORK_DIR . '/libraries/customizer/customizer-library.php';
+			include_once ZEUS_FRAMEWORK_DIR . '/libraries/customizer/customizer-library.php';
 
 		}
 
 		if ( defined('USE_TGMPA') ) {
 
 			// Class for required/recommend plugin notification and installation.
-			include_once ZUES_FRAMEWORK_DIR . '/libraries/TGMPA/class-tgm-plugin-activation.php';
+			include_once ZEUS_FRAMEWORK_DIR . '/libraries/TGMPA/class-tgm-plugin-activation.php';
 
 		}
 

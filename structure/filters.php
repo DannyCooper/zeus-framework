@@ -18,7 +18,6 @@ if ( ! function_exists( 'zeus_excerpt_more' ) ) {
 }
 add_filter( 'excerpt_more', 'zeus_excerpt_more' );
 
-
 /**
  * Remove sidebar from full width page template.
  */

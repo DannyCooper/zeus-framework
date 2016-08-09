@@ -108,7 +108,6 @@ class Zeus_Framework {
 	 */
 	function styles() {
 
-		wp_enqueue_style( 'olympus-reset', ZEUS_FRAMEWORK_URI . '/assets/css/normalize.css' );
 		wp_enqueue_style( 'olympus-base', ZEUS_FRAMEWORK_URI . '/assets/css/base.css' );
 
 		wp_enqueue_script( 'superfish', ZEUS_FRAMEWORK_URI . '/assets/js/superfish.js', array( 'jquery' ), '', true );

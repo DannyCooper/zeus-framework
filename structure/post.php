@@ -145,9 +145,7 @@ if ( ! function_exists( 'zeus_content' ) ) {
 		echo '<div '.zeus_get_attr( 'entry-content' ).'>'; // WPCS: XSS OK.
 
 		the_content(
-			sprintf(
-				__( 'Continue reading %s', 'zeus' ),
-				'<span class="screen-reader-text">' . get_the_title() . '</span>'
+				__( 'Continue reading&hellip;', 'zeus' )
 			)
 		);
 		wp_link_pages(

@@ -46,6 +46,7 @@ html {
  */
 body {
 	margin: 0;
+	background: #fff;
 }
 
 /* HTML5 display definitions
@@ -558,12 +559,6 @@ hr {
 
 ul,
 ol {
-    margin: 0 0 24px;
-    margin: 0 0 1.5rem;
-}
-
-
-ul {
     margin: 0 0 1.5rem 1.5rem;
     padding: 0;
     list-style: disc;
@@ -1326,7 +1321,7 @@ ol.comment-list li.comment ul.children {
     border: 0;
 }
 
-.widget_search .search-submit {
+.widget_search .search-submit, .widget_search .search-submit:hover {
     position: absolute;
     z-index: 100;
     top: 16px;

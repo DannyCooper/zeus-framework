@@ -2,7 +2,7 @@
 /**
  * Functions used to build .site-header
  *
- * @package zeus
+ * @package zeus-framework
  */
 
 if ( ! function_exists( 'zeus_head' ) ) {

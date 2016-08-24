@@ -4,7 +4,7 @@
  *
  * This can be overwitten by adding a file named archive-header.php to /template-parts
  *
- * @package zeus
+ * @package zeus-framework
  */
 
 if ( ! is_archive() ) {

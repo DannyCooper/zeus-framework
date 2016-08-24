@@ -2,7 +2,7 @@
 /**
  * Template used for the site comments.
  *
- * @package zeus
+ * @package zeus-framework
  */
 ?>
 

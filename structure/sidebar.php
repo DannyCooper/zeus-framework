@@ -2,7 +2,7 @@
 /**
  * Filters used to modify theme output.
  *
- * @package zeus
+ * @package zeus-framework
  */
 
 if ( ! function_exists( 'zeus_sidebar_primary' ) ) {

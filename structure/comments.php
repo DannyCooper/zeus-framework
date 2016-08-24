@@ -2,7 +2,7 @@
 /**
  * Template functions used for the site comments.
  *
- * @package zeus
+ * @package zeus-framework
  */
 
 if ( ! function_exists( 'zeus_display_comments' ) ) {

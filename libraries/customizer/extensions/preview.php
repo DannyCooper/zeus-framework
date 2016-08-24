@@ -20,7 +20,7 @@ function zeus_customizer_preview_js() {
 	);
 
 }
-	add_action( 'customize_preview_init', 'zeus_customizer_preview_js' );
+add_action( 'customize_preview_init', 'zeus_customizer_preview_js' );
 
 /**
  * Add postMessage support for site title and description for the Theme Customizer.
@@ -31,4 +31,4 @@ function zeus_customizer_register( $wp_customize ) {
 	$wp_customize->get_setting( 'blogname' )->transport = 'postMessage';
 	$wp_customize->get_setting( 'blogdescription' )->transport = 'postMessage';
 }
-	add_action( 'customize_register', 'zeus_customizer_register' );
+add_action( 'customize_register', 'zeus_customizer_register' );

@@ -2,7 +2,7 @@
 /**
  * Standard WordPress <head>.
  *
- * @package zeus
+ * @package zeus-framework
  */
  ?>
 

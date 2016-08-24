@@ -2,7 +2,7 @@
 /**
  * Outputs the primary navigation.
  *
- * @package zeus
+ * @package zeus-framework
  */
 
 if ( ! function_exists( 'zeus_nav_primary' ) ) {

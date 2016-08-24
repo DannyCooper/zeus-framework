@@ -2,7 +2,7 @@
 /**
  * Functions for outputting CSS.
  *
- * @package zeus
+ * @package zeus-framework
  */
 
 if ( ! function_exists( 'zeus_generate_css' ) ) {

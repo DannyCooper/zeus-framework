@@ -2,9 +2,12 @@
 /**
  * The wrapper used to build all front-facing pages.
  *
- * @package zeus
+ * @package zeus-framework
  */
 
+/**
+ * @todo
+ */
 function zeus() {
 
 	zeus_head();
@@ -15,10 +18,10 @@ function zeus() {
 	 do_action( 'zeus_body_open_before' );
 
 	 /**
- 	 * The opening <body> tag.
- 	 *
- 	 * @hooked zeus_body_open_html - 10
- 	 */
+ 	  * The opening <body> tag.
+ 	  *
+ 	  * @hooked zeus_body_open_html - 10
+ 	  */
 	 do_action( 'zeus_body_open' );
 
 	/**
@@ -37,7 +40,6 @@ function zeus() {
 
 		do_action( 'zeus_header_wrapper_before' );
 
-
 		echo '<div class="wrap">';
 
 	/**
@@ -51,7 +53,6 @@ function zeus() {
 
 	do_action( 'zeus_header_wrapper_after' );
 
-
 	echo '</header><!-- .site-header -->';
 	/**
 	 * Fires after the site-header
@@ -62,17 +63,13 @@ function zeus() {
 
 	do_action( 'zeus_site_content_before' );
 
-
-
 			echo '<div class="site-content">';
-
 
 				/**
 				 * Fires before the site-content (content + sidebar)
 				 */
 				do_action( 'zeus_content_sidebar_wrapper_before' );
 				echo '<div class="wrap">';
-
 
 					/**
 					 * Content + Sidebar Hook
@@ -127,10 +124,10 @@ function zeus() {
 	 do_action( 'zeus_body_close_before' );
 
 	 /**
- 	 * The closing </body> tag.
- 	 *
- 	 * @hooked zeus_body_close_html - 10
- 	 */
+ 	  * The closing </body> tag.
+ 	  *
+ 	  * @hooked zeus_body_close_html - 10
+ 	  */
 	 do_action( 'zeus_body_close' );
 
 	/**

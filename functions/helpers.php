@@ -2,7 +2,7 @@
 /**
  * Zeus helper functions
  *
- * @package zeus
+ * @package zeus-framework
  */
 
 /**

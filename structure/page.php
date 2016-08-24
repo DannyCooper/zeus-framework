@@ -2,7 +2,7 @@
 /**
  * Functions used to build the page-*.php templates.
  *
- * @package zeus
+ * @package zeus-framework
  */
 
 if ( ! function_exists( 'zeus_archive_header' ) ) {

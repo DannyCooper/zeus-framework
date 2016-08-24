@@ -2,7 +2,7 @@
 /**
  * Header for search results pages.
  *
- * @package zeus
+ * @package zeus-framework
  */
 
 if ( ! is_search() ) {

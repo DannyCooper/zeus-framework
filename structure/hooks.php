@@ -2,7 +2,7 @@
 /**
  * Build the layout using the hooks.
  *
- * @package zeus
+ * @package zeus-framework
  */
 
 // Body hooks.
@@ -24,14 +24,13 @@ add_action( 'zeus_content', 'zeus_content_paging_nav', 20 );
 add_action( 'zeus_entry_header', 'zeus_entry_title', 10 );
 add_action( 'zeus_entry_header', 'zeus_entry_meta', 15 );
 
-
 // Loop Hooks.
 add_action( 'zeus_loop', 'zeus_featured_image', 5 );
 add_action( 'zeus_loop', 'zeus_entry_header', 10 );
 add_action( 'zeus_loop', 'zeus_content', 20 );
 add_action( 'zeus_loop', 'zeus_entry_footer', 30 );
 add_action( 'zeus_loop_after', 'zeus_display_comments', 10 );
- add_action( 'zeus_loop_after', 'zeus_content_nav', 30 );
+add_action( 'zeus_loop_after', 'zeus_content_nav', 30 );
 
 // Archive Page Hooks.
 add_action( 'zeus_loop_before', 'zeus_archive_header', 20 );

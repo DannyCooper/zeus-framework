@@ -123,6 +123,9 @@ class Zeus_Framework {
 	 */
 	function admin() {
 
+		// Library for metaboxes.
+		include_once ZEUS_FRAMEWORK_DIR . '/libraries/CMB2/init.php';
+
 		if ( defined('USE_ZEUS_ADMIN_NOTICES') ) {
 
 			// Class for generating admin notices
@@ -132,7 +135,7 @@ class Zeus_Framework {
 
 		if ( defined('USE_ZEUS_CUSTOMIZER') ) {
 
-			// Class for required/recommend plugin notification and installation.
+			// Library for required/recommend plugin notification and installation.
 			include_once ZEUS_FRAMEWORK_DIR . '/libraries/customizer/customizer-library.php';
 
 		}

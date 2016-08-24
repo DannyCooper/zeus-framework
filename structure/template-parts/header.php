@@ -2,7 +2,7 @@
 /**
  * Template used for the site heaader.
  *
- * @package zeus
+ * @package zeus-framework
  */
 
 echo '<div ' . zeus_get_attr( 'branding' ) . '>';

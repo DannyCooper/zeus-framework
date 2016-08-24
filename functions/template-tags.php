@@ -2,7 +2,7 @@
 /**
  * Zeus Core - A WordPress theme development framework.
  *
- * @package zeus
+ * @package zeus-framework
  */
 
 /**

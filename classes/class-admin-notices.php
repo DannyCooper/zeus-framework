@@ -2,7 +2,7 @@
 /**
  * Class for displaying notices in wp-admin
  *
- * @package zeus
+ * @package zeus-framework
  */
 
 /**

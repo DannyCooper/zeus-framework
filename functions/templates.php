@@ -2,7 +2,7 @@
 /**
  * Zeus template functions
  *
- * @package zeus
+ * @package zeus-framework
  */
 
 /**

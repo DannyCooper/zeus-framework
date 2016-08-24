@@ -2,7 +2,7 @@
 /**
  * The template for displaying the footer.
  *
- * @package zeus
+ * @package zeus-framework
  */
 
 if ( ! is_active_sidebar( 'footer-1' )

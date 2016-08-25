@@ -127,7 +127,7 @@ if ( ! class_exists( 'CMB2_Bootstrap_223_Trunk', false ) ) {
 		 * @since  2.0.0
 		 */
 		public function include_cmb() {
-			if ( class_exists( 'zues-framework', false ) ) {
+			if ( class_exists( 'CMB2', false ) ) {
 				return;
 			}
 
@@ -138,6 +138,8 @@ if ( ! class_exists( 'CMB2_Bootstrap_223_Trunk', false ) ) {
 			if ( ! defined( 'CMB2_DIR' ) ) {
 				define( 'CMB2_DIR', trailingslashit( dirname( __FILE__ ) ) );
 			}
+
+			$this->l10ni18n();
 
 			// Include helper functions
 			require_once 'includes/CMB2_Base.php';
@@ -150,6 +152,30 @@ if ( ! class_exists( 'CMB2_Bootstrap_223_Trunk', false ) ) {
 			// Kick the whole thing off
 			require_once 'bootstrap.php';
 			cmb2_bootstrap();
+		}
+
+		/**
+		 * Registers CMB2 text domain path
+		 * @since  2.0.0
+		 */
+		public function l10ni18n() {
+
+			$loaded = load_plugin_textdomain( 'cmb2', false, '/languages/' );
+
+			if ( ! $loaded ) {
+				$loaded = load_muplugin_textdomain( 'cmb2', '/languages/' );
+			}
+
+			if ( ! $loaded ) {
+				$loaded = load_theme_textdomain( 'cmb2', get_stylesheet_directory() . '/languages/' );
+			}
+
+			if ( ! $loaded ) {
+				$locale = apply_filters( 'plugin_locale', get_locale(), 'cmb2' );
+				$mofile = dirname( __FILE__ ) . '/languages/cmb2-' . $locale . '.mo';
+				load_textdomain( 'cmb2', $mofile );
+			}
+
 		}
 
 	}

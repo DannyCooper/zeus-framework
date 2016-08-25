@@ -10,10 +10,10 @@
  * @license   http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
 
- /**
-  * Fires before the zeus framework
-  */
-do_action('zeus_before');
+/**
+ * Fires before the zeus framework
+ */
+do_action( 'zeus_before' );
 
 /**
  * The main class that loads all zeus core framework files.
@@ -30,6 +30,7 @@ class Zeus_Framework {
 		$this->admin();
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'styles' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'admin_styles' ) );
 
 	}
 
@@ -119,12 +120,19 @@ class Zeus_Framework {
 	}
 
 	/**
+	 * Register and enqueue admin stylesheets.
+	 */
+	function admin_styles() {
+
+		wp_register_style( 'zeus-framework-admin-css', ZEUS_FRAMEWORK_URI . '/assets/css/admin.css' );
+
+	}
+
+	/**
 	 * Load the functions/classes to be used within wp-admin.
 	 */
 	function admin() {
 
-		// Library for metaboxes.
-		include_once ZEUS_FRAMEWORK_DIR . '/libraries/CMB2/init.php';
 
 		if ( defined('USE_ZEUS_ADMIN_NOTICES') ) {
 
@@ -155,4 +163,4 @@ $zeus_framework = new Zeus_Framework();
 /*
  * Fires after the zeus framework
  */
-do_action('zeus_end');
+do_action( 'zeus_end' );

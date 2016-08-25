@@ -127,7 +127,7 @@ if ( ! class_exists( 'CMB2_Bootstrap_223_Trunk', false ) ) {
 		 * @since  2.0.0
 		 */
 		public function include_cmb() {
-			if ( class_exists( 'zues-framework', false ) ) {
+			if ( class_exists( 'CMB2', false ) ) {
 				return;
 			}
 

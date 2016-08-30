@@ -21,29 +21,30 @@ if ( ! function_exists( 'zeus_head' ) ) {
 	}
 }
 
-if ( ! function_exists( 'zeus_load_header_template' ) ) {
+if ( ! function_exists( 'zeus_header_func' ) ) {
 	/**
 	 * Output the site title.
 	 */
-	function zeus_load_header_template() {
+	function zeus_header_func() {
 
-		$priority = array(
-			'template-parts/header.php',
-			'zeus-framework/structure/template-parts/header.php',
-		);
+		echo '<div ' . zeus_get_attr( 'branding' ) . '>';
 
-		locate_template( $priority, true );
+			if ( get_header_image() ) {
+				do_action( 'zeus_image_header' );
+			} else {
+				do_action( 'zeus_text_header' );
+			}
+
+		echo '</div><!-- .site-branding -->';
 
 	}
 }
 
-if ( ! function_exists( 'zeus_text_header' ) ) {
+if ( ! function_exists( 'zeus_site_description' ) ) {
 	/**
-	 * Output the site title.
+	 * Output the site description.
 	 */
-	function zeus_text_header() {
-
-		zeus_site_title();
+	function zeus_site_description() {
 		echo '<p '. zeus_get_attr( 'site-description' ) . '>' . get_bloginfo( 'description' ) . '</p>';
 	}
 }
@@ -52,7 +53,7 @@ if ( ! function_exists( 'zeus_image_header' ) ) {
 	/**
 	 * Output the header image.
 	 */
-	function zeus_image_header() {
+	function zeus_image_header_func() {
 
 		echo '<a href="'. esc_url( home_url( '/' ) ) .'" rel="home">';
 			echo '<img src="'.get_header_image().'" width="'.esc_attr( get_custom_header()->width ) .'" height="'.  esc_attr( get_custom_header()->height ) .'" alt="">';

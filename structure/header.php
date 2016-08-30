@@ -30,9 +30,9 @@ if ( ! function_exists( 'zeus_header_func' ) ) {
 		echo '<div ' . zeus_get_attr( 'branding' ) . '>';
 
 			if ( get_header_image() ) {
-				do_action( 'zeus_image_header' );
+				do_action( 'zeus_header_image' );
 			} else {
-				do_action( 'zeus_text_header' );
+				do_action( 'zeus_header_text' );
 			}
 
 		echo '</div><!-- .site-branding -->';

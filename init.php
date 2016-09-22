@@ -3,7 +3,7 @@
  * Zeus Framework - A WordPress theme development framework.
  *
  * @package   zeus
- * @version   1.0.1
+ * @version   1.0.2
  * @author    Danny Cooper <email@dannycooper.com
  * @copyright Copyright (c) 2008 - 2015, Danny Cooper
  * @link      https://olympusthemes.com/zeus
@@ -40,7 +40,7 @@ class Zeus_Framework {
 	function constants() {
 
 		/* Sets the framework version number. */
-		define( 'ZEUS_FRAMEWORK_VERSION', '1.0.1' );
+		define( 'ZEUS_FRAMEWORK_VERSION', '1.0.2' );
 
 		/* Sets the path to the parent theme directory. */
 		define( 'ZEUS_THEME_DIR', get_template_directory() );
@@ -71,8 +71,6 @@ class Zeus_Framework {
 		include_once ZEUS_FRAMEWORK_DIR . '/functions/widget-areas.php';
 		include_once ZEUS_FRAMEWORK_DIR . '/functions/generate-css.php';
 		include_once ZEUS_FRAMEWORK_DIR . '/functions/attr.php';
-
-		include_once ZEUS_FRAMEWORK_DIR . '/functions/templates.php';
 		include_once ZEUS_FRAMEWORK_DIR . '/functions/helpers.php';
 
 	}
@@ -94,13 +92,6 @@ class Zeus_Framework {
 
 		include_once ZEUS_FRAMEWORK_DIR . '/structure/hooks.php';
 		include_once ZEUS_FRAMEWORK_DIR . '/structure/filters.php';
-
-		/**
-		 * Automatically load all widgets in specified directory
-		 *
-		 * @see zeus-framework/functions/helpers.php:77
-		 */
-		zeus_autoloader( '/template-parts/widgets/' );
 
 	}
 
@@ -151,6 +142,13 @@ class Zeus_Framework {
 
 			// Class for required/recommend plugin notification and installation.
 			include_once ZEUS_FRAMEWORK_DIR . '/libraries/TGMPA/class-tgm-plugin-activation.php';
+
+		}
+
+		if ( defined('USE_CMB2') ) {
+
+			// Class for creating metaboxes.
+			include_once ZEUS_FRAMEWORK_DIR . '/libraries/CMB2/init.php';
 
 		}
 

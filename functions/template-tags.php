@@ -21,10 +21,6 @@ function zeus_body_classes( $classes ) {
 		$classes[] = 'has-logo';
 	}
 
-	if ( is_page_template( 'page-templates/page-full-width.php' ) ) {
-		$classes[] = 'page-full-width';
-	}
-
 	return $classes;
 }
 add_filter( 'body_class', 'zeus_body_classes' );

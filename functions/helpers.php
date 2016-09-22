@@ -21,19 +21,6 @@ function zeus_is_theme_activated() {
 }
 
 /**
- * Automatically loads all .php files in a directory
- * @param string $dir
- * @todo check against child theme
- */
-function zeus_autoloader( $dir ) {
-
-	$full_dir = ZEUS_THEME_DIR . $dir;
-	foreach ( glob( $full_dir.'*.php' ) as $filename ) {
-		include $filename; }
-
-}
-
-/**
  * Check if sidebar is active, if it is then display it.
  * @param string $id
  */

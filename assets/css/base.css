@@ -447,7 +447,7 @@ h6 {
 }
 
 p {
-    margin: 0 0 1.5rem;
+	margin: 0 0 24px;
 }
 
 dfn,
@@ -459,19 +459,18 @@ i {
 
 blockquote {
     font-style: italic;
-    margin: 0 0 1.5rem;
-    padding: 0 0 0 1.5rem;
+    margin: 0 0 24px;
+    padding: 0 0 0 24px;
     border-left: 2px solid #286185;
 }
 
 address {
-    margin: 0 0 1.5rem;
+    margin: 0 0 24px;
 }
 
 pre {
     font-family: 'Courier 10 Pitch', Courier, monospace;
     font-size: 15px;
-    font-size: .9375rem;
     line-height: 1.6;
     overflow: auto;
     max-width: 100%;
@@ -486,7 +485,6 @@ tt,
 var {
     font-family: Monaco, Consolas, 'Andale Mono', 'DejaVu Sans Mono', monospace;
     padding: 8px;
-    padding: .5rem;
 }
 
 abbr,
@@ -559,13 +557,13 @@ hr {
 
 ul,
 ol {
-    margin: 0 0 1.5rem 1.5rem;
+    margin: 0 0 24px 24px;
     padding: 0;
     list-style: disc;
 }
 
 ul li {
-    margin-bottom: 1rem;
+    margin-bottom: 16px;
 }
 
 ol {
@@ -576,7 +574,6 @@ li > ul,
 li > ol {
     margin-bottom: 0;
     margin-left: 24px;
-    margin-left: 1.5rem;
 }
 
 dt {
@@ -585,7 +582,7 @@ dt {
 
 dd {
     margin: 0 24px 24px;
-    margin: 0 1.5rem 1.5rem;
+    margin: 0 24px 24px;
 }
 
 img {
@@ -600,7 +597,7 @@ img {
 .wpcf7-submit {
     font-size: 14px;
     font-size: .875rem;
-    padding: .5rem 1rem;
+    padding: 8px 16px;
     background: none;
 }
 
@@ -621,7 +618,6 @@ textarea {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     max-width: 100%;
     padding: 8px 16px;
-    padding: .5rem 1rem;
     border: 1px solid #dbdbdb;
     border-radius: 3px;
     background: white;
@@ -666,7 +662,7 @@ select {
 
 .site-title {
     font-size: 24px;
-    font-size: 1.5rem;
+    font-size: 24px;
     margin: 0;
 }
 
@@ -677,7 +673,6 @@ select {
 
 .site-description {
     font-size: 14px;
-    font-size: .875rem;
     margin: 0;
     color: #5a5a5a;
 }
@@ -690,14 +685,8 @@ select {
 # Navigation
 --------------------------------------------------------------*/
 
-.nav {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-}
-
 .menu-primary .menu {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 14px;
-    font-size: .875rem;
     border-top: 1px solid #dbdbdb;
     border-bottom: 1px solid #dbdbdb;
 }
@@ -758,7 +747,6 @@ select {
 .menu-primary .menu li a {
     display: block;
     padding: 16px;
-    padding: 1rem;
     transition: all linear .15s;
     text-decoration: none;
     color: #717171;
@@ -766,7 +754,6 @@ select {
 
 .menu-primary ul li:first-child {
     margin-left: -16px;
-    margin-left: -1rem;
 }
 
 .menu-primary ul li ul li:first-child {
@@ -843,7 +830,6 @@ select {
 
 .nav-links {
     font-size: 14px;
-    font-size: .875rem;
     font-weight: bold;
 }
 
@@ -855,7 +841,6 @@ select {
     font-weight: normal;
     display: block;
     padding-top: 4px;
-    padding-top: .25rem;
     text-decoration: none;
 }
 
@@ -874,13 +859,11 @@ select {
 
 .site-content {
     margin-top: 50px;
-    margin-top: 3.125rem;
 }
 
 article.post,
 article.page {
     margin-bottom: 50px;
-    margin-bottom: 3.125rem;
 }
 
 .page-template-full-width .content {
@@ -905,20 +888,18 @@ article.page {
 .page-links {
     clear: both;
     margin: 0 0 24px;
-    margin: 0 0 1.5rem;
+    margin: 0 0 24px;
 }
 
 .entry-header {
     margin: 0 0 24px;
-    margin: 0 0 1.5rem;
+    margin: 0 0 24px;
 }
 
 .entry-title {
     font-size: 30px;
-    font-size: 1.875rem;
     margin-top: 0;
     margin-bottom: 8px;
-    margin-bottom: .5rem;
 }
 
 .entry-title a {
@@ -929,7 +910,6 @@ article.page {
 .archive .archive-header,
 .search .archive-header {
     margin-bottom: 50px;
-    margin-bottom: 3.125rem;
     border-bottom: 1px solid #dbdbdb;
 }
 
@@ -945,13 +925,11 @@ article.page {
 
 .taxonomy-description {
     font-size: 14px;
-    font-size: .875rem;
     color: #5a5a5a;
 }
 
 .entry-thumbnail {
     margin-bottom: 32px;
-    margin-bottom: 2rem;
     text-align: center;
     border-bottom: 0;
 }
@@ -959,20 +937,16 @@ article.page {
 .entry-content hr {
     clear: both;
     margin: 32px 0;
-    margin: 2rem 0;
     border-top: 1px solid #dbdbdb;
 }
 
 .entry-content li {
     margin-bottom: 16px;
-    margin-bottom: 1rem;
 }
 
 .entry-meta,
 .entry-meta a {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 14px;
-    font-size: .875rem;
     text-decoration: none;
     color: #9a9a9a;;
 }
@@ -983,7 +957,6 @@ article.page {
 
 .entry-footer {
     font-size: 13px;
-    font-size: 81.25rem;
 }
 
 .entry-footer a {
@@ -997,9 +970,7 @@ article.page {
 
 .entry-footer {
     font-size: 14px;
-    font-size: .875rem;
     padding-top: 24px;
-    padding-top: 1.5rem;
     color: #717171;
     border-top: 1px solid #dbdbdb;
 }
@@ -1016,7 +987,6 @@ article.page {
 
 .cat-links {
     margin-bottom: 4px;
-    margin-bottom: .25rem;
 }
 
 .moretag {
@@ -1025,7 +995,6 @@ article.page {
 
 .post-navigation {
     margin-bottom: 50px;
-    margin-bottom: 3.125rem;
 }
 
 .content .search-form .search-field {
@@ -1034,9 +1003,7 @@ article.page {
 
 .content .search-form .search-submit {
 	padding: 12px;
-	padding: .75rem;
 	margin-left: 16px;
-	margin-left: 1rem
 }
 
 /*--------------------------------------------------------------
@@ -1045,7 +1012,6 @@ article.page {
 
 .comments-area {
     margin-top: 50px;
-    margin-bottom: 3.125rem;
 }
 
 .comment-list {
@@ -1056,7 +1022,6 @@ article.page {
 
 .comment-notes {
     font-size: 14px;
-    font-size: .875rem;
 }
 
 .comment-form-author,
@@ -1067,15 +1032,13 @@ article.page {
 
 .comment article {
     margin-bottom: 48px;
-    margin-bottom: 3rem;
-    padding-bottom: 1rem;
+    padding-bottom: 16px;
     border-bottom: 1px solid #dbdbdb;
 }
 
 
 ol.comment-list li.comment ul.children {
     margin: 0 0 0 24px;
-    margin: 0 0 0 1.5rem;
     list-style: none;
 }
 
@@ -1086,13 +1049,12 @@ ol.comment-list li.comment ul.children {
 .comment-author {
     font-style: normal;
     font-weight: 700;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     vertical-align: middle;
 }
 
 .comment-author-avatar {
     float: left;
-    margin-right: 1rem;
+    margin-right: 16px;
 }
 
 .comment-published {
@@ -1108,12 +1070,10 @@ ol.comment-list li.comment ul.children {
     float: right;
     width: 85%;
     margin-top: 8px;
-    margin-top: .5rem;
 }
 
 .comment-meta {
     margin-bottom: 24px;
-    margin-bottom: 1.5rem;
 }
 
 .comment-meta a {
@@ -1127,7 +1087,6 @@ ol.comment-list li.comment ul.children {
 
 .comment-time {
     font-size: 13px;
-    font-size: .8125rem;
 }
 
 .comment-time a {
@@ -1136,30 +1095,25 @@ ol.comment-list li.comment ul.children {
 
 .comments-title {
     margin: 0 0 48px;
-    margin: 0 0 3rem;
 }
 
 .comment-reply-link {
     font-size: 14px;
-    font-size: .875rem;
     text-decoration: none;
     color: #5a5a5a;
 }
 
 .comment-reply-link:after {
     padding-left: 4px;
-    padding-left: .25rem;
     content: '\2193';
 }
 
 .bypostauthor span {
     font-size: 11px;
-    font-size: .785714286rem;
     font-weight: normal;
     line-height: 1.428571429;
     float: right;
     padding: 6px 10px;
-    padding: .428571429rem .714285714rem;
     color: white;
     border: 0;
     border-radius: 3px;
@@ -1173,15 +1127,12 @@ ol.comment-list li.comment ul.children {
 
 .comment-respond {
     margin-bottom: 50px;
-    margin-bottom: 3.125rem;
 }
 
 .comment-respond label {
     font-size: 13px;
-    font-size: .8125rem;
     display: block;
     padding-bottom: 4px;
-    padding-bottom: .25rem;
     color: #717171;
 }
 
@@ -1191,15 +1142,12 @@ ol.comment-list li.comment ul.children {
 
 .page .comments-area {
     margin-top: 32px;
-    margin-top: 2rem;
     padding-top: 50px;
-    padding-top: 3.125rem;
     border-top: 1px solid #dbdbdb;
 }
 
 .nav-links-comments {
     margin-bottom: 50px;
-    margin-bottom: 3.125rem;
 }
 
 .nav-links-comments .nav-previous {
@@ -1216,20 +1164,16 @@ ol.comment-list li.comment ul.children {
 
 .sidebar {
     font-size: 14px;
-    font-size: .875rem;
     color: #717171;
 }
 
 .widget {
     margin-bottom: 48px;
-    margin-bottom: 3rem;
 }
 
 .widget-title {
     font-size: 16px;
-    font-size: 1rem;
     margin-bottom: 24px;
-    margin-bottom: 1.5rem;
 }
 
 .widget ul {
@@ -1240,15 +1184,12 @@ ol.comment-list li.comment ul.children {
 
 .widget ul li {
     margin-bottom: 16px;
-    margin-bottom: 1rem;
     padding-bottom: 16px;
-    padding-bottom: 1rem;
     border-bottom: 1px solid #dbdbdb;
 }
 
 .widget_nav_menu .sub-menu {
     margin-left: 8px;
-    margin-left: .5rem;
 }
 
 
@@ -1261,9 +1202,7 @@ ol.comment-list li.comment ul.children {
 .widget_nav_menu ul li a {
     display: block;
     margin-bottom: 16px;
-    margin-bottom: 1rem;
     padding-bottom: 16px;
-    padding-bottom: 1rem;
     border-bottom: 1px solid #dbdbdb;
 }
 
@@ -1280,7 +1219,6 @@ ol.comment-list li.comment ul.children {
     box-sizing: border-box;
     width: 100% ;
     padding: 12px;
-    padding: .75rem;
 }
 
 .widget ul li a {
@@ -1309,9 +1247,8 @@ ol.comment-list li.comment ul.children {
 
 .widget .children {
     margin-top: 16px;
-    margin-top: 1rem;
-    padding-top: 1rem;
-    padding-left: 1rem;
+    padding-top: 16px;
+    padding-left: 16px;
     border-top: 1px solid #dbdbdb;
 }
 
@@ -1325,9 +1262,7 @@ ol.comment-list li.comment ul.children {
     position: absolute;
     z-index: 100;
     top: 16px;
-    top: 1rem;
-    right: .12px;
-    right: .75rem;
+    right: 12px;
     display: block;
     width: 16px;
     height: 16px;
@@ -1343,7 +1278,7 @@ ol.comment-list li.comment ul.children {
 
 .widget_rss .rss-date {
     display: block;
-    padding: .25rem 0;
+    padding: .4px 0;
     color: #dbdbdb;
 }
 
@@ -1353,7 +1288,6 @@ ol.comment-list li.comment ul.children {
 
 .site-footer {
     font-size: 14px;
-    font-size: .875rem;
 }
 
 .footer-widgets {
@@ -1368,14 +1302,12 @@ ol.comment-list li.comment ul.children {
 
 .sub-footer {
     font-size: 13px;
-    font-size: .8125rem;
     color: #717171;
 }
 
 .sub-footer-inner {
     border-top: 1px solid #dbdbdb;
     padding: 16px 0;
-    padding: 1rem 0;
 }
 
 .footer-attribution {
@@ -1394,9 +1326,7 @@ ol.comment-list li.comment ul.children {
 
 .site-footer .widget ul li {
     margin-bottom: 14px;
-    margin-bottom: .875rem;
     padding-bottom: 14px;
-    padding-bottom: .875rem;
     border-bottom: 1px solid #dbdbdb;
 }
 
@@ -1424,7 +1354,6 @@ ol.comment-list li.comment ul.children {
 table {
     width: 100%;
     margin: 0 0 24px;
-    margin: 0 0 1.5rem;
     table-layout: fixed;
     empty-cells: show;
     border-spacing: 0;
@@ -1439,7 +1368,7 @@ table th {
     overflow: visible;
     margin: 0;
     /*to make ths where the title is really long work*/
-    padding: .5em 1em;
+    padding: .8px 16px;
     /* cell padding */
 
     text-align: left;
@@ -1509,7 +1438,6 @@ table tbody > tr:last-child > td {
 
 .screen-reader-text:focus {
     font-size: 14px;
-    font-size: .875rem;
     font-weight: bold;
     line-height: normal;
     z-index: 100000; /* Above WP toolbar. */
@@ -1534,13 +1462,11 @@ table tbody > tr:last-child > td {
 .alignleft {
     float: left;
     margin-right: 24px;
-    margin-right: 1.5rem;
 }
 
 .alignright {
     float: right;
     margin-left: 24px;
-    margin-left: 1.5rem;
 }
 
 .aligncenter {
@@ -1611,7 +1537,6 @@ object {
 .wp-caption {
     max-width: 100%;
     margin-bottom: 24px;
-    margin-bottom: 1.5rem;
 }
 
 .wp-caption img[class*='wp-image-'] {
@@ -1624,7 +1549,7 @@ object {
 }
 
 .wp-caption .wp-caption-text {
-    margin: .8125em 0;
+    margin: 13px 0;
 }
 
 /*--------------------------------------------------------------
@@ -1632,7 +1557,6 @@ object {
 --------------------------------------------------------------*/
 .gallery {
     margin-bottom: 24px;
-    margin-bottom: 1.5rem;
 }
 
 .gallery-item {
@@ -1683,7 +1607,6 @@ object {
 --------------------------------------------------------------*/
 
 ul.page-numbers {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     margin-left: 0;
     margin-bottom: 50px;
 }
@@ -1704,7 +1627,7 @@ ul.page-numbers {
     display: inline-block;
     /* use padding and font-size to change buttons size */
 
-    padding: .5rem 1rem;
+    padding: 8px 16px;
     -webkit-user-select: none;
        -moz-user-select: none;
         -ms-user-select: none;

@@ -11,12 +11,29 @@ if ( ! function_exists( 'zeus_nav_primary' ) ) {
 	 */
 	function zeus_nav_primary() {
 
-		$priority = array(
-			'template-parts/primary-nav.php',
-			'zeus-framework/structure/template-parts/primary-nav.php',
-		);
+		echo '<nav '. zeus_get_attr( 'menu', 'primary' ) .'">';
 
-		locate_template( $priority, true );
+			/**
+			* Fires before the primary navigation
+			*/
+			do_action( 'zeus_primary_nav_before' );
+
+			echo '<div class="wrap">';
+				wp_nav_menu(
+				array(
+					'theme_location' => 'primary',
+					'container' => false,
+					)
+			);
+			echo '</div>';
+
+
+			/**
+			 * Fires after the primary navigation
+			 */
+			 do_action( 'zeus_primary_nav_after' );
+
+		echo '</nav><!-- .menu-primary -->';
 
 	}
 }

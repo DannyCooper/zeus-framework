@@ -84,12 +84,41 @@ if ( ! function_exists( 'zeus_no_content' ) ) {
 	 */
 	function zeus_no_content() {
 
-		$priority = array(
-			'template-parts/content-none.php',
-			'zeus-framework/structure/template-parts/content-none.php',
-		);
+		/**
+		 * Fires before the 'no content' content
+		 */
+		do_action( 'zeus_no_content_before' ); ?>
 
-		locate_template( $priority, true );
+		<section class="no-results not-found">
+			<header class="entry-header">
+				<h1 class="entry-title"><?php esc_html_e( 'Nothing Found', 'zeus-framework' ); ?></h1>
+			</header><!-- .page-header -->
+
+
+		    <?php if ( is_home() && current_user_can( 'publish_posts' ) ) : ?>
+
+				<p><?php printf( wp_kses( __( 'Ready to publish your first post? <a href="%1$s">Get started here</a>.', 'zeus-framework' ), array( 'a' => array( 'href' => array() ) ) ), esc_url( admin_url( 'post-new.php' ) ) ); ?></p>
+
+		    <?php elseif ( is_search() ) : ?>
+
+				<p><?php esc_html_e( 'Sorry, but nothing matched your search terms. Please try again with some different keywords.', 'zeus-framework' ); ?></p>
+				<?php get_search_form(); ?>
+
+		    <?php else : ?>
+
+				<p><?php esc_html_e( 'It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help.', 'zeus-framework' ); ?></p>
+				<?php get_search_form(); ?>
+
+		    <?php endif; ?>
+
+		</section><!-- .no-results -->
+
+		<?php
+
+		/**
+		 * Fires after the 'no content' content
+		 */
+		do_action( 'zeus_no_content_after' ); 
 
 	}
 }

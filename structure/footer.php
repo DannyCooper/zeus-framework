@@ -12,12 +12,21 @@ if ( ! function_exists( 'zeus_load_footer_template' ) ) {
 	 */
 	function zeus_load_footer_template() {
 
-		$priority = array(
-			'template-parts/footer.php',
-			'zeus-framework/structure/template-parts/footer.php',
-		);
+		if (   ! is_active_sidebar( 'footer-1' )
+			&& ! is_active_sidebar( 'footer-2' )
+			&& ! is_active_sidebar( 'footer-3' )
+			&& ! is_active_sidebar( 'footer-4' ) ) {
+			return;
+		} ?>
 
-		locate_template( $priority, true );
+		 <div class="footer-widgets">
+				<?php zeus_widget_area( 'footer-1' ); ?>
+				<?php zeus_widget_area( 'footer-2' ); ?>
+				<?php zeus_widget_area( 'footer-3' ); ?>
+				<?php zeus_widget_area( 'footer-4' ); ?>
+		 </div><!-- .footer-widgets -->
+
+		 <?php
 	}
 }
 

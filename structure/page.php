@@ -11,12 +11,23 @@ if ( ! function_exists( 'zeus_archive_header' ) ) {
 	 */
 	function zeus_archive_header() {
 
-		$priority = array(
-			'template-parts/archive-header.php',
-			'zeus-framework/structure/template-parts/archive-header.php',
-		);
+		if ( ! is_archive() ) {
+			return;
+		}
 
-		locate_template( $priority, true );
+		?>
+
+		<header <?php zeus_attr( 'archive-header' ) ?>>
+			<h1 <?php zeus_attr( 'archive-title' ) ?>>
+				<?php the_archive_title(); ?>
+			</h1>
+
+			<div <?php zeus_attr( 'archive-description' ) ?>>
+				<?php echo get_the_archive_description(); ?>
+			</div><!-- .archive-description -->
+		</header><!-- .archive-header -->
+
+		<?php
 
 	}
 }
@@ -27,11 +38,16 @@ if ( ! function_exists( 'zeus_search_header' ) ) {
 	 */
 	function zeus_search_header() {
 
-		$priority = array(
-			'template-parts/search-header.php',
-			'zeus-framework/structure/template-parts/search-header.php',
-		);
+		if ( ! is_search() ) {
+			return;
+		} ?>
 
-		locate_template( $priority, true );
+		<header <?php zeus_attr( 'archive-header' ) ?>>
+			<h1 <?php zeus_attr( 'archive-title' ) ?>>
+				<?php printf( esc_html__( 'Search Results for: %s', 'zeus-framework' ), '<span>' . get_search_query() . '</span>' ); ?>
+			</h1>
+		</header><!-- .archive-header -->
+
+		<?php
 	}
 }

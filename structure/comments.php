@@ -102,12 +102,27 @@ if ( ! function_exists( 'zeus_comments_nav' ) ) {
 	 */
 	function zeus_comments_nav() {
 
-		$priority = array(
-			'template-parts/comments-nav.php',
-			'zeus-framework/structure/template-parts/comments-nav.php',
-		);
+		if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) : // Are there comments to navigate through? ?>
 
-		locate_template( $priority, true );
+			<nav id="comment-nav-above" class="navigation comment-navigation">
+
+				<h2 class="screen-reader-text"><?php esc_html_e( 'Comment navigation', 'zeus-framework' ); ?></h2>
+
+				<div class="nav-links nav-links-comments clear">
+
+					<div class="nav-previous">
+						<?php previous_comments_link( esc_html__( '&larr; Older Comments', 'zeus-framework' ) ); ?>
+					</div><!-- .nav-previous -->
+
+					<div class="nav-next">
+						<?php next_comments_link( esc_html__( 'Newer Comments &rarr;', 'zeus-framework' ) ); ?>
+					</div><!-- .nav-next -->
+
+				</div><!-- .nav-links -->
+
+			</nav><!-- #comment-nav-above -->
+
+		<?php endif; // Check for comment navigation.
 
 	}
 }

@@ -39,11 +39,11 @@ if ( ! function_exists( 'zeus_head' ) ) {
 	}
 }
 
-if ( ! function_exists( 'zeus_header_func' ) ) {
+if ( ! function_exists( 'zeus_header' ) ) {
 	/**
 	 * Output the site title.
 	 */
-	function zeus_header_func() {
+	function zeus_header() {
 
 		echo '<div ' . zeus_get_attr( 'branding' ) . '>';
 
@@ -67,11 +67,11 @@ if ( ! function_exists( 'zeus_site_description' ) ) {
 	}
 }
 
-if ( ! function_exists( 'zeus_image_header' ) ) {
+if ( ! function_exists( 'zeus_header_image' ) ) {
 	/**
 	 * Output the header image.
 	 */
-	function zeus_image_header_func() {
+	function zeus_header_image() {
 
 		echo '<a href="'. esc_url( home_url( '/' ) ) .'" rel="home">';
 			echo '<img src="'.get_header_image().'" width="'.esc_attr( get_custom_header()->width ) .'" height="'.  esc_attr( get_custom_header()->height ) .'" alt="">';

@@ -10,8 +10,8 @@ add_action( 'zeus_body_open', 'zeus_body_open_html', 10 );
 add_action( 'zeus_body_close', 'zeus_body_close_html', 10 );
 
 // Head hooks.
-add_action( 'zeus_header', 'zeus_header_func', 10 );
-add_action( 'zeus_header_image', 'zeus_header_image_func' );
+add_action( 'zeus_header', 'zeus_header', 10 );
+add_action( 'zeus_header_image', 'zeus_header_image' );
 add_action( 'zeus_header_text', 'zeus_site_title', 10 );
 add_action( 'zeus_header_text', 'zeus_site_description', 20 );
 add_action( 'zeus_header_after', 'zeus_nav_primary', 10 );

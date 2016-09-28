@@ -2,8 +2,8 @@
 /**
  * Zeus Framework - A WordPress theme development framework.
  *
- * @package   zeus
- * @version   1.0.2
+ * @package   zeus-framework
+ * @version   1.0.3
  * @author    Danny Cooper <email@dannycooper.com
  * @copyright Copyright (c) 2008 - 2015, Danny Cooper
  * @link      https://olympusthemes.com/zeus

@@ -168,7 +168,7 @@ class CMB2_Types {
 
 		// Then, let's throw a debug _doing_it_wrong notice.
 
-		$message = array( sprintf( esc_html__( 'Custom field types require a Type object instantiation to use this method. This method was called by the \'%s\' field type.' ), $this->field->type() ) );
+		$message = array( sprintf( esc_html__( 'Custom field types require a Type object instantiation to use this method. This method was called by the \'%s\' field type.', 'zeus-framework' ), $this->field->type() ) );
 
 		$message[] = is_object( $this->type )
 			? esc_html__( 'That field type may not work as expected.', 'zeus-framework' )

@@ -69,8 +69,10 @@ class Zeus_Admin_Notice
 		global $current_user;
 		$user_id = $current_user->ID;
 		if ( ! get_user_meta( $user_id, $this->notice_id ) ) {
-			echo '<div id="olympus-message" class="' . esc_attr( $this->class ) .'"><p>' . esc_html( $this->message );
-			echo '<span class="olympus-dismiss"><a href="?' . esc_attr( $this->notice_id ) . '=hide">Hide Notice</a></p></span></div>';
+			echo '<div id="zeus-message" class="' . esc_attr( $this->class ) .'"><p>' . esc_html( $this->message );
+			echo '<span class="zeus-dismiss"><a href="?' . esc_attr( $this->notice_id ) . '=hide">';
+			echo __('Hide Notice', 'zeus-framework');
+			echo '</a></p></span></div>';
 		}
 
 	}

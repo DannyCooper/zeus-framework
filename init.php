@@ -30,7 +30,6 @@ class Zeus_Framework {
 		$this->admin();
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'styles' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'admin_styles' ) );
 
 	}
 
@@ -100,22 +99,13 @@ class Zeus_Framework {
 	 */
 	function styles() {
 
-		wp_enqueue_style( 'olympus-base', ZEUS_FRAMEWORK_URI . '/assets/css/base.css' );
+		wp_enqueue_style( 'zeus-base', ZEUS_FRAMEWORK_URI . '/assets/css/base.css' );
 
 		wp_enqueue_script( 'superfish', ZEUS_FRAMEWORK_URI . '/assets/js/superfish.js', array( 'jquery' ), '', true );
 		wp_enqueue_script( 'tinynav', ZEUS_FRAMEWORK_URI . '/assets/js/tinynav.js', array( 'jquery' ), '', true );
 
 		// Register Font Awesome incase we want to use it later
 		wp_register_style( 'font-awesome', ZEUS_FRAMEWORK_URI . '/assets/css/font-awesome.css' );
-
-	}
-
-	/**
-	 * Register and enqueue admin stylesheets.
-	 */
-	function admin_styles() {
-
-		wp_register_style( 'zeus-framework-admin-css', ZEUS_FRAMEWORK_URI . '/assets/css/admin.css' );
 
 	}
 

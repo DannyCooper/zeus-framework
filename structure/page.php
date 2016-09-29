@@ -23,7 +23,7 @@ if ( ! function_exists( 'zeus_archive_header' ) ) {
 			</h1>
 
 			<div <?php zeus_attr( 'archive-description' ) ?>>
-				<?php echo get_the_archive_description(); ?>
+				<?php the_archive_description(); ?>
 			</div><!-- .archive-description -->
 		</header><!-- .archive-header -->
 

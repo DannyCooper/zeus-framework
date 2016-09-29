@@ -80,7 +80,7 @@ if ( ! function_exists( 'zeus_footer_copyright' ) ) {
 
 		$text = __( 'Copyright &copy; %1$s <a href="%2$s">%3$s</a> &middot; All Rights Reserved.', 'zeus-framework' );
 
-		$date = date( 'Y' );
+		$date = date_i18n( __( 'Y', 'zeus-framework' ) );
 		$url = esc_url( home_url() );
 		$name = get_bloginfo( 'name' );
 

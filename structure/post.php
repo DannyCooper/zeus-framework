@@ -118,7 +118,7 @@ if ( ! function_exists( 'zeus_no_content' ) ) {
 		/**
 		 * Fires after the 'no content' content
 		 */
-		do_action( 'zeus_no_content_after' ); 
+		do_action( 'zeus_no_content_after' );
 
 	}
 }
@@ -345,7 +345,7 @@ if ( ! function_exists( 'zeus_categorized_blog' ) ) {
 	 */
 	function zeus_categorized_blog() {
 
-		if ( false === ( $all_the_cool_cats = get_transient( '_s_categories' ) ) ) {
+		if ( false === ( $all_the_cool_cats = get_transient( '_zeus_categories' ) ) ) {
 
 			// Create an array of all the categories that are attached to posts.
 			$all_the_cool_cats = get_categories(
@@ -359,7 +359,7 @@ if ( ! function_exists( 'zeus_categorized_blog' ) ) {
 
 			// Count the number of categories that are attached to the posts.
 			$all_the_cool_cats = count( $all_the_cool_cats );
-			set_transient( '_s_categories', $all_the_cool_cats );
+			set_transient( '_zeus_categories', $all_the_cool_cats );
 		}
 
 		if ( $all_the_cool_cats > 1 ) {

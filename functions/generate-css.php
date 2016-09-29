@@ -21,7 +21,7 @@ if ( ! function_exists( 'zeus_generate_css' ) ) {
 
 		$return = '';
 
-		$mod = get_theme_mod( $mod_name );
+		$mod = esc_attr( get_theme_mod( $mod_name ) );
 
 		if ( ! empty( $mod ) ) {
 			$return = sprintf(

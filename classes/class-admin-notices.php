@@ -71,7 +71,7 @@ class Zeus_Admin_Notice
 		if ( ! get_user_meta( $user_id, $this->notice_id ) ) {
 			echo '<div id="zeus-message" class="' . esc_attr( $this->class ) .'"><p>' . esc_html( $this->message );
 			echo '<span class="zeus-dismiss"><a href="?' . esc_attr( $this->notice_id ) . '=hide">';
-			echo __('Hide Notice', 'zeus-framework');
+			echo esc_html__('Hide Notice', 'zeus-framework');
 			echo '</a></p></span></div>';
 		}
 

@@ -5,10 +5,6 @@
  * @package zeus-framework
  */
 
-// Body hooks.
-add_action( 'zeus_body_open', 'zeus_body_open_html', 10 );
-add_action( 'zeus_body_close', 'zeus_body_close_html', 10 );
-
 // Head hooks.
 add_action( 'zeus_header', 'zeus_header', 10 );
 add_action( 'zeus_header_image', 'zeus_header_image' );

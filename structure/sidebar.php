@@ -23,7 +23,7 @@ if ( ! function_exists( 'zeus_sidebar' ) ) {
 			 *
 			 * @hooked zeus_sidebar_inner
 			 */
-			do_action( 'zeus_sidebar_primary' );
+			do_action( 'zeus_sidebar' );
 
 		echo '</aside><!-- .sidebar-primary -->';
 
@@ -35,15 +35,15 @@ if ( ! function_exists( 'zeus_sidebar' ) ) {
 	}
 }
 
-if ( ! function_exists( 'zeus_sidebar' ) ) {
+if ( ! function_exists( 'zeus_sidebar_inner' ) ) {
 	/**
 	 * Output the primary sidebar.
 	 */
 	function zeus_sidebar_inner() {
 
-		echo '<div class="sidebar-primary-inner">';
-			dynamic_sidebar( 'primary-sidebar' );
-		echo '</div><!-- .sidebar-primary-inner -->';
+		echo '<div class="sidebar-inner">';
+			dynamic_sidebar( 'sidebar-primary' );
+		echo '</div><!-- .sidebar-inner -->';
 
 	}
 }

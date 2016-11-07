@@ -45,7 +45,7 @@ if ( ! function_exists( 'zeus_header' ) ) {
 	 */
 	function zeus_header() {
 
-		echo '<div ' . zeus_get_attr( 'branding' ) . '>';
+		echo apply_filters( 'zues_site_branding_open', '<div ' . zeus_get_attr( 'branding' ) . '>');
 
 			if ( get_header_image() ) {
 				do_action( 'zeus_header_image' );
@@ -53,7 +53,7 @@ if ( ! function_exists( 'zeus_header' ) ) {
 				do_action( 'zeus_header_text' );
 			}
 
-		echo '</div><!-- .site-branding -->';
+		echo apply_filters( 'zues_site_branding_close', '</div><!-- .site-branding -->');
 
 	}
 }

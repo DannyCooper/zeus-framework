@@ -5,11 +5,11 @@
  * @package zeus-framework
  */
 
-if ( ! function_exists( 'zeus_display_comments' ) ) {
+if ( ! function_exists( 'zeus_comments' ) ) {
 	/**
 	 * Zeus display comments
 	 */
-	function zeus_display_comments() {
+	function zeus_comments() {
 
 		/*
 		 * Returns a template file for the comments
@@ -20,7 +20,7 @@ if ( ! function_exists( 'zeus_display_comments' ) ) {
 		 *     return '/my-comments.php';
 		 * }
 		 */
-		$template = apply_filters( 'zeus_comments_template', '/comments.php' );
+		$template = apply_filters( 'zeus_comments_template', '/zeus-framework/structure/template-parts/comments.php' );
 
 		// If comments are open or we have at least one comment, load up the comment template.
 		if ( comments_open() || '0' !== get_comments_number() ) :

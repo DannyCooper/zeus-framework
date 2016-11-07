@@ -5,39 +5,41 @@
  * @package zeus-framework
  */
 
-if ( ! function_exists( 'zeus_sidebar_primary' ) ) {
+if ( ! function_exists( 'zeus_sidebar' ) ) {
 	/**
 	 * Output the primary sidebar and hooks.
 	 */
-	function zeus_sidebar_primary() {
+	function zeus_sidebar() {
+
+		/**
+		 * Fires before the sidebar
+		 */
+		do_action( 'zeus_sidebar_before' );
 
 		echo '<aside '. zeus_get_attr( 'sidebar', 'primary' ) . '">';
 
 			/**
-			 * Fires before the sidebar
-			 */
-			do_action( 'zeus_sidebar_primary_before' );
-
-			/**
 			 * Primary Sidebar Hook
+			 *
+			 * @hooked zeus_sidebar_inner
 			 */
 			do_action( 'zeus_sidebar_primary' );
 
-			/**
-			 * Fires after the sidebar
-			 */
-			do_action( 'zeus_sidebar_primary_after' );
-
 		echo '</aside><!-- .sidebar-primary -->';
+
+		/**
+		 * Fires after the sidebar
+		 */
+		do_action( 'zeus_sidebar_after' );
 
 	}
 }
 
-if ( ! function_exists( 'zeus_build_sidebar' ) ) {
+if ( ! function_exists( 'zeus_sidebar' ) ) {
 	/**
 	 * Output the primary sidebar.
 	 */
-	function zeus_build_sidebar() {
+	function zeus_sidebar_inner() {
 
 		echo '<div class="sidebar-primary-inner">';
 			dynamic_sidebar( 'primary-sidebar' );

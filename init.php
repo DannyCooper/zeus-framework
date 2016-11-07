@@ -3,7 +3,7 @@
  * Zeus Framework - A WordPress theme development framework.
  *
  * @package   zeus-framework
- * @version   1.0.3
+ * @version   1.0.4
  * @author    Danny Cooper <email@dannycooper.com
  * @copyright Copyright (c) 2008 - 2015, Danny Cooper
  * @link      https://olympusthemes.com/zeus
@@ -82,7 +82,7 @@ class Zeus_Framework {
 		include_once ZEUS_FRAMEWORK_DIR . '/structure/wrapper.php';
 		include_once ZEUS_FRAMEWORK_DIR . '/structure/general.php';
 		include_once ZEUS_FRAMEWORK_DIR . '/structure/header.php';
-		include_once ZEUS_FRAMEWORK_DIR . '/structure/primary-nav.php';
+		include_once ZEUS_FRAMEWORK_DIR . '/structure/nav.php';
 		include_once ZEUS_FRAMEWORK_DIR . '/structure/post.php';
 		include_once ZEUS_FRAMEWORK_DIR . '/structure/page.php';
 		include_once ZEUS_FRAMEWORK_DIR . '/structure/comments.php';

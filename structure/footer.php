@@ -5,12 +5,12 @@
  * @package zeus-framework
  */
 
-if ( ! function_exists( 'zeus_load_footer_template' ) ) {
+if ( ! function_exists( 'zeus_footer' ) ) {
 
 	/**
 	 * Output the footer widget areas
 	 */
-	function zeus_load_footer_template() {
+	function zeus_footer() {
 
 		if (   ! is_active_sidebar( 'footer-1' )
 			&& ! is_active_sidebar( 'footer-2' )

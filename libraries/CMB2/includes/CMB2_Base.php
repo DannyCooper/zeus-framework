@@ -386,11 +386,11 @@ abstract class CMB2_Base {
 			switch ( $message ) {
 
 				case self::DEPRECATED_PARAM:
-					$message = sprintf( __( 'The "%s" field parameter has been deprecated in favor of the "%s" parameter.', 'cmb2' ), $args[3], $args[4] );
+					$message = sprintf( __( 'The "%s" field parameter has been deprecated in favor of the "%s" parameter.', 'zeus-framework' ), $args[3], $args[4] );
 					break;
 
 				case self::DEPRECATED_CB_PARAM:
-					$message = sprintf( __( 'Using the "%s" field parameter as a callback has been deprecated in favor of the "%s" parameter.', 'cmb2' ), $args[3], $args[4] );
+					$message = sprintf( __( 'Using the "%s" field parameter as a callback has been deprecated in favor of the "%s" parameter.', 'zeus-framework' ), $args[3], $args[4] );
 					break;
 
 				default:
@@ -420,10 +420,10 @@ abstract class CMB2_Base {
 		if ( defined( 'WP_DEBUG' ) && WP_DEBUG && apply_filters( 'deprecated_argument_trigger_error', true ) ) {
 			if ( function_exists( '__' ) ) {
 				if ( ! is_null( $message ) ) {
-					trigger_error( sprintf( __( '%1$s was called with a parameter that is <strong>deprecated</strong> since version %2$s! %3$s', 'cmb2' ), $function, $version, $message ) );
+					trigger_error( sprintf( __( '%1$s was called with a parameter that is <strong>deprecated</strong> since version %2$s! %3$s', 'zeus-framework' ), $function, $version, $message ) );
 				}
 				else {
-					trigger_error( sprintf( __( '%1$s was called with a parameter that is <strong>deprecated</strong> since version %2$s with no alternative available.', 'cmb2' ), $function, $version ) );
+					trigger_error( sprintf( __( '%1$s was called with a parameter that is <strong>deprecated</strong> since version %2$s with no alternative available.', 'zeus-framework' ), $function, $version ) );
 				}
 			} else {
 				if ( ! is_null( $message ) ) {
@@ -456,7 +456,7 @@ abstract class CMB2_Base {
 			case 'object_type':
 				return $this->{$field};
 			default:
-				throw new Exception( sprintf( esc_html__( 'Invalid %1$s property: %2$s', 'give' ), __CLASS__, $field ) );
+				throw new Exception( sprintf( esc_html__( 'Invalid %1$s property: %2$s', 'zeus-framework' ), __CLASS__, $field ) );
 		}
 	}
 
@@ -470,7 +470,7 @@ abstract class CMB2_Base {
 		$object_class = strtolower( get_class( $this ) );
 
 		if ( ! has_filter(  "{$object_class}_inherit_{$method}" ) ) {
-			throw new Exception( sprintf( esc_html__( 'Invalid %1$s method: %2$s', 'give' ), get_class( $this ), $method ) );
+			throw new Exception( sprintf( esc_html__( 'Invalid %1$s method: %2$s', 'zeus-framework' ), get_class( $this ), $method ) );
 		}
 
 		array_unshift( $args, $this );

@@ -17,7 +17,7 @@
  *               Bill Erickson (@billerickson / billerickson.net)
  *               Andrew Norcross (@norcross / andrewnorcross.com)
  *
- * Version:      2.2.3.beta
+ * Version:      2.2.3.1
  *
  * Text Domain:  cmb2
  * Domain Path:  languages
@@ -48,7 +48,7 @@
                   or things might explode!
 *************************************************************************/
 
-if ( ! class_exists( 'CMB2_Bootstrap_223_Trunk', false ) ) {
+if ( ! class_exists( 'CMB2_Bootstrap_2231', false ) ) {
 
 	/**
 	 * Handles checking for and loading the newest version of CMB2
@@ -61,14 +61,14 @@ if ( ! class_exists( 'CMB2_Bootstrap_223_Trunk', false ) ) {
 	 * @license   GPL-2.0+
 	 * @link      http://webdevstudios.com
 	 */
-	class CMB2_Bootstrap_223_Trunk {
+	class CMB2_Bootstrap_2231 {
 
 		/**
 		 * Current version number
 		 * @var   string
 		 * @since 1.0.0
 		 */
-		const VERSION = '2.2.3.beta';
+		const VERSION = '2.2.3.1';
 
 		/**
 		 * Current version hook priority.
@@ -77,20 +77,20 @@ if ( ! class_exists( 'CMB2_Bootstrap_223_Trunk', false ) ) {
 		 * @var   int
 		 * @since 2.0.0
 		 */
-		const PRIORITY = 9980;
+		const PRIORITY = 9978;
 
 		/**
-		 * Single instance of the CMB2_Bootstrap_223_Trunk object
+		 * Single instance of the CMB2_Bootstrap_2231 object
 		 *
-		 * @var CMB2_Bootstrap_223_Trunk
+		 * @var CMB2_Bootstrap_2231
 		 */
 		public static $single_instance = null;
 
 		/**
-		 * Creates/returns the single instance CMB2_Bootstrap_223_Trunk object
+		 * Creates/returns the single instance CMB2_Bootstrap_2231 object
 		 *
 		 * @since  2.0.0
-		 * @return CMB2_Bootstrap_223_Trunk Single instance object
+		 * @return CMB2_Bootstrap_2231 Single instance object
 		 */
 		public static function initiate() {
 			if ( null === self::$single_instance ) {
@@ -127,7 +127,7 @@ if ( ! class_exists( 'CMB2_Bootstrap_223_Trunk', false ) ) {
 		 * @since  2.0.0
 		 */
 		public function include_cmb() {
-			if ( class_exists( 'zeus-framework', false ) ) {
+			if ( class_exists( 'CMB2', false ) ) {
 				return;
 			}
 
@@ -160,20 +160,20 @@ if ( ! class_exists( 'CMB2_Bootstrap_223_Trunk', false ) ) {
 		 */
 		public function l10ni18n() {
 
-			$loaded = load_plugin_textdomain( 'zeus-framework', false, '/languages/' );
+			$loaded = load_plugin_textdomain( 'cmb2', false, '/languages/' );
 
 			if ( ! $loaded ) {
-				$loaded = load_muplugin_textdomain( 'zeus-framework', '/languages/' );
+				$loaded = load_muplugin_textdomain( 'cmb2', '/languages/' );
 			}
 
 			if ( ! $loaded ) {
-				$loaded = load_theme_textdomain( 'zeus-framework', get_stylesheet_directory() . '/languages/' );
+				$loaded = load_theme_textdomain( 'cmb2', get_stylesheet_directory() . '/languages/' );
 			}
 
 			if ( ! $loaded ) {
-				$locale = apply_filters( 'plugin_locale', get_locale(), 'zeus-framework' );
+				$locale = apply_filters( 'plugin_locale', get_locale(), 'cmb2' );
 				$mofile = dirname( __FILE__ ) . '/languages/cmb2-' . $locale . '.mo';
-				load_textdomain( 'zeus-framework', $mofile );
+				load_textdomain( 'cmb2', $mofile );
 			}
 
 		}
@@ -181,6 +181,6 @@ if ( ! class_exists( 'CMB2_Bootstrap_223_Trunk', false ) ) {
 	}
 
 	// Make it so...
-	CMB2_Bootstrap_223_Trunk::initiate();
+	CMB2_Bootstrap_2231::initiate();
 
 }

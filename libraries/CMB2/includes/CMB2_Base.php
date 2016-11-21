@@ -25,7 +25,7 @@ abstract class CMB2_Base {
 	protected $cmb_id = '';
 
 	/**
-	 * The deprecated object properties name.
+	 * The object properties name.
 	 * @var   string
 	 * @since 2.2.3
 	 */
@@ -58,6 +58,16 @@ abstract class CMB2_Base {
 	 * @since 2.0.0
 	 */
 	protected $callback_results = array();
+
+	/**
+	 * The deprecated_param method deprecated param message signature.
+	 */
+	const DEPRECATED_PARAM = 1;
+
+	/**
+	 * The deprecated_param method deprecated callback param message signature.
+	 */
+	const DEPRECATED_CB_PARAM = 2;
 
 	/**
 	 * Get started
@@ -264,7 +274,7 @@ abstract class CMB2_Base {
 	}
 
 	/**
-	 * Handles the property callbacks, and passes this object as property.
+	 * Handles the parameter callbacks, and passes this object as parameter.
 	 * @since  2.2.3
 	 * @param  callable $cb The callback method/function/closure
 	 * @return mixed        Return of the callback function.
@@ -301,6 +311,132 @@ abstract class CMB2_Base {
 	}
 
 	/**
+	 * Checks if this object has parameter corresponding to the given filter
+	 * which is callable. If so, it registers the callback, and if not,
+	 * converts the maybe-modified $val to a boolean for return.
+	 *
+ 	 * The registered handlers will have a parameter name which matches the filter, except:
+ 	 * - The 'cmb2_api' prefix will be removed
+ 	 * - A '_cb' suffix will be added (to stay inline with other '*_cb' parameters).
+ 	 *
+	 * @since  2.2.3
+	 *
+	 * @param  string $hook_name     The hook name.
+	 * @param  bool   $val           The default value.
+	 * @param  string $hook_function The hook function. Default: 'add_filter'
+	 *
+	 * @return null|bool             Null if hook is registered, or bool for value.
+	 */
+	public function maybe_hook_parameter( $hook_name, $val = null, $hook_function = 'add_filter' ) {
+
+		// Remove filter prefix, add param suffix.
+		$parameter = substr( $hook_name, strlen( 'cmb2_api_' ) ) . '_cb';
+
+		return self::maybe_hook(
+			$this->prop( $parameter, $val ),
+			$hook_name,
+			$hook_function
+		);
+	}
+
+	/**
+	 * Checks if given value is callable, and registers the callback.
+	 * If is non-callable, converts the $val to a boolean for return.
+	 *
+	 * @since  2.2.3
+	 *
+	 * @param  bool   $val           The default value.
+	 * @param  string $hook_name     The hook name.
+	 * @param  string $hook_function The hook function.
+	 *
+	 * @return null|bool         Null if hook is registered, or bool for value.
+	 */
+	public static function maybe_hook( $val, $hook_name, $hook_function ) {
+		if ( is_callable( $val ) ) {
+			$hook_function( $hook_name, $val, 10, 2 );
+			return null;
+		}
+
+		// Cast to bool.
+		return !! $val;
+	}
+
+	/**
+	 * Mark a param as deprecated and inform when it has been used.
+	 *
+	 * There is a default WordPress hook deprecated_argument_run that will be called
+	 * that can be used to get the backtrace up to what file and function used the
+	 * deprecated argument.
+	 *
+	 * The current behavior is to trigger a user error if WP_DEBUG is true.
+	 *
+	 * @since 2.2.3
+	 *
+	 * @param string $function The function that was called.
+	 * @param string $version  The version of CMB2 that deprecated the argument used.
+	 * @param string $message  Optional. A message regarding the change, or numeric
+	 *                         key to generate message from additional arguments.
+	 *                         Default null.
+	 */
+	protected function deprecated_param( $function, $version, $message = null ) {
+
+		if ( is_numeric( $message ) ) {
+			$args = func_get_args();
+
+			switch ( $message ) {
+
+				case self::DEPRECATED_PARAM:
+					$message = sprintf( __( 'The "%s" field parameter has been deprecated in favor of the "%s" parameter.', 'cmb2' ), $args[3], $args[4] );
+					break;
+
+				case self::DEPRECATED_CB_PARAM:
+					$message = sprintf( __( 'Using the "%s" field parameter as a callback has been deprecated in favor of the "%s" parameter.', 'cmb2' ), $args[3], $args[4] );
+					break;
+
+				default:
+					$message = null;
+					break;
+			}
+		}
+
+		/**
+		 * Fires when a deprecated argument is called. This is a WP core action.
+		 *
+		 * @since 2.2.3
+		 *
+		 * @param string $function The function that was called.
+		 * @param string $message  A message regarding the change.
+		 * @param string $version  The version of CMB2 that deprecated the argument used.
+		 */
+		do_action( 'deprecated_argument_run', $function, $message, $version );
+
+		/**
+		 * Filters whether to trigger an error for deprecated arguments. This is a WP core filter.
+		 *
+		 * @since 2.2.3
+		 *
+		 * @param bool $trigger Whether to trigger the error for deprecated arguments. Default true.
+		 */
+		if ( defined( 'WP_DEBUG' ) && WP_DEBUG && apply_filters( 'deprecated_argument_trigger_error', true ) ) {
+			if ( function_exists( '__' ) ) {
+				if ( ! is_null( $message ) ) {
+					trigger_error( sprintf( __( '%1$s was called with a parameter that is <strong>deprecated</strong> since version %2$s! %3$s', 'cmb2' ), $function, $version, $message ) );
+				}
+				else {
+					trigger_error( sprintf( __( '%1$s was called with a parameter that is <strong>deprecated</strong> since version %2$s with no alternative available.', 'cmb2' ), $function, $version ) );
+				}
+			} else {
+				if ( ! is_null( $message ) ) {
+					trigger_error( sprintf( '%1$s was called with a parameter that is <strong>deprecated</strong> since version %2$s! %3$s', $function, $version, $message ) );
+				}
+				else {
+					trigger_error( sprintf( '%1$s was called with a parameter that is <strong>deprecated</strong> since version %2$s with no alternative available.', $function, $version ) );
+				}
+			}
+		}
+	}
+
+	/**
 	 * Magic getter for our object.
 	 * @param string $field
 	 * @throws Exception Throws an exception if the field is invalid.
@@ -320,8 +456,42 @@ abstract class CMB2_Base {
 			case 'object_type':
 				return $this->{$field};
 			default:
-				throw new Exception( 'Invalid ' . __CLASS__ . ' property: ' . $field );
+				throw new Exception( sprintf( esc_html__( 'Invalid %1$s property: %2$s', 'give' ), __CLASS__, $field ) );
 		}
 	}
 
+	/**
+	 * Allows overloading the object with methods... Whooaaa oooh it's magic, y'knoooow.
+	 * @since 1.0.0
+	 * @param string $method Non-existent method.
+	 * @param array  $args   All arguments passed to the method
+	 */
+	public function __call( $method, $args ) {
+		$object_class = strtolower( get_class( $this ) );
+
+		if ( ! has_filter(  "{$object_class}_inherit_{$method}" ) ) {
+			throw new Exception( sprintf( esc_html__( 'Invalid %1$s method: %2$s', 'give' ), get_class( $this ), $method ) );
+		}
+
+		array_unshift( $args, $this );
+
+		/**
+		 * Allows overloading the object (CMB2 or CMB2_Field) with additional capabilities
+		 * by registering hook callbacks.
+		 *
+		 * The first dynamic portion of the hook name, $object_class, refers to the object class,
+		 * either cmb2 or cmb2_field.
+		 *
+		 * The second dynamic portion of the hook name, $method, is the non-existent method being
+		 * called on the object. To avoid possible future methods encroaching on your hooks,
+		 * use a unique method (aka, $cmb->prefix_my_method()).
+		 *
+		 * When registering your callback, you will need to ensure that you register the correct
+		 * number of `$accepted_args`, accounting for this object instance being the first argument.
+		 *
+		 * @param array $args The arguments to be passed to the hook.
+		 *                    The first argument will always be this object instance.
+		 */
+		return apply_filters_ref_array( "{$object_class}_inherit_{$method}", $args );
+	}
 }

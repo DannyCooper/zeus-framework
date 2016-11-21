@@ -52,7 +52,6 @@ class CMB2 extends CMB2_Base {
 	protected $mb_defaults = array(
 		'id'               => '',
 		'title'            => '',
-		'type'             => '',
 		'object_types'     => array(), // Post type
 		'context'          => 'normal',
 		'priority'         => 'high',
@@ -68,6 +67,7 @@ class CMB2 extends CMB2_Base {
 		'taxonomies'       => array(),
 		'new_user_section' => 'add-new-user', // or 'add-existing-user'
 		'new_term_section' => true,
+		'show_in_rest'     => false,
 	);
 
 	/**
@@ -114,7 +114,7 @@ class CMB2 extends CMB2_Base {
 	public function __construct( $config, $object_id = 0 ) {
 
 		if ( empty( $config['id'] ) ) {
-			wp_die( esc_html__( 'Metabox configuration is required to have an ID parameter.', 'zeus-framework' ) );
+			wp_die( esc_html__( 'Metabox configuration is required to have an ID parameter.', 'cmb2' ) );
 		}
 
 		$this->meta_box = wp_parse_args( $config, $this->mb_defaults );
@@ -425,11 +425,11 @@ class CMB2 extends CMB2_Base {
 		<div class="postbox cmb-row cmb-repeatable-grouping', $closed_class, '" data-iterator="', $field_group->index, '">';
 
 			if ( $field_group->args( 'repeatable' ) ) {
-				echo '<button type="button" ', $remove_disabled, 'data-selector="', $field_group->id(), '_repeat" class="dashicons-before dashicons-no-alt cmb-remove-group-row"></button>';
+				echo '<button type="button" ', $remove_disabled, 'data-selector="', $field_group->id(), '_repeat" class="dashicons-before dashicons-no-alt cmb-remove-group-row" title="', esc_attr( $field_group->options( 'remove_button' ) ), '"></button>';
 			}
 
 			echo '
-			<div class="cmbhandle" title="' , esc_attr__( 'Click to toggle', 'zeus-framework' ), '"><br></div>
+			<div class="cmbhandle" title="' , esc_attr__( 'Click to toggle', 'cmb2' ), '"><br></div>
 			<h3 class="cmb-group-title cmbhandle-title"><span>', $field_group->replace_hash( $field_group->options( 'group_title' ) ), '</span></h3>
 
 			<div class="inside cmb-td cmb-nested cmb-field-list">';
@@ -468,7 +468,8 @@ class CMB2 extends CMB2_Base {
 	/**
 	 * Add a hidden field to the list of hidden fields to be rendered later
 	 * @since 2.0.0
-	 * @param array  $field_args Array of field arguments to be passed to CMB2_Field
+	 * @param array           $field_args  Array of field arguments to be passed to CMB2_Field
+	 * @param CMB2_Field|null $field_group CMB2_Field group field object
 	 */
 	public function add_hidden_field( $field_args, $field_group = null ) {
 		if ( isset( $field_args['field_args'] ) ) {
@@ -676,8 +677,8 @@ class CMB2 extends CMB2_Base {
 	/**
 	 * Save a repeatable group
 	 * @since  1.x.x
-	 * @param  array $field_group CMB2_Field group field object
-	 * @return mixed              Return of CMB2_Field::update_data()
+	 * @param  CMB2_Field $field_group CMB2_Field group field object
+	 * @return mixed                   Return of CMB2_Field::update_data()
 	 */
 	public function save_group_field( $field_group ) {
 		$base_id = $field_group->id();
@@ -814,32 +815,18 @@ class CMB2 extends CMB2_Base {
 			return $this->mb_object_type;
 		}
 
-		$registered_types = $this->prop( 'object_types' );
+		$registered_types = $this->box_types();
 
-		if ( ! $registered_types ) {
-			$this->mb_object_type = 'post';
-			return $this->mb_object_type;
-		}
-
-		$type = false;
-
-		// check if 'object_types' is a string
-		if ( is_string( $registered_types ) ) {
-			$type = $registered_types;
-		}
+		$type = '';
 
 		// if it's an array of one, extract it
-		elseif ( is_array( $registered_types ) && 1 === count( $registered_types ) ) {
+		if ( 1 === count( $registered_types ) ) {
 			$last = end( $registered_types );
 			if ( is_string( $last ) ) {
 				$type = $last;
 			}
-		} elseif ( is_array( $registered_types ) ) {
-			$page_type = $this->current_object_type();
-
-			if ( in_array( $page_type, $registered_types, true ) ) {
-				$type = $page_type;
-			}
+		} elseif ( ( $curr_type = $this->current_object_type() ) && in_array( $curr_type, $registered_types, true ) ) {
+			$type = $curr_type;
 		}
 
 		// Get our object type
@@ -857,6 +844,15 @@ class CMB2 extends CMB2_Base {
 		}
 
 		return $this->mb_object_type;
+	}
+
+	/**
+	 * Gets the box 'object_types' array based on box settings.
+	 * @since  2.2.3
+	 * @return array Object types
+	 */
+	public function box_types() {
+		return CMB2_Utils::ensure_array( $this->prop( 'object_types' ), array( 'post' ) );
 	}
 
 	/**
@@ -944,11 +940,11 @@ class CMB2 extends CMB2_Base {
 	 * Get a field object
 	 * @since  2.0.3
 	 * @param  string|array|CMB2_Field $field       Metabox field id or field config array or CMB2_Field object
-	 * @param  CMB2_Field              $field_group (optional) CMB2_Field object (group parent)
-	 * @return CMB2_Field|false CMB2_Field object (or false)
+	 * @param  CMB2_Field|null         $field_group (optional) CMB2_Field object (group parent)
+	 * @return CMB2_Field|false                     CMB2_Field object (or false)
 	 */
 	public function get_field( $field, $field_group = null ) {
-		if ( is_a( $field, 'CMB2_Field' ) ) {
+		if ( $field instanceof CMB2_Field ) {
 			return $field;
 		}
 
@@ -976,11 +972,11 @@ class CMB2 extends CMB2_Base {
 	/**
 	 * Handles determining which type of arguments to pass to CMB2_Field
 	 * @since  2.0.7
-	 * @param  mixed  $field_id     Field (or group field) ID
-	 * @param  mixed  $field_args   Array of field arguments
-	 * @param  mixed  $sub_field_id Sub field ID (if field_group exists)
-	 * @param  mixed  $field_group  If a sub-field, will be the parent group CMB2_Field object
-	 * @return array                Array of CMB2_Field arguments
+	 * @param  mixed           $field_id     Field (or group field) ID
+	 * @param  mixed           $field_args   Array of field arguments
+	 * @param  mixed           $sub_field_id Sub field ID (if field_group exists)
+	 * @param  CMB2_Field|null $field_group  If a sub-field, will be the parent group CMB2_Field object
+	 * @return array                         Array of CMB2_Field arguments
 	 */
 	public function get_field_args( $field_id, $field_args, $sub_field_id, $field_group ) {
 
@@ -1066,7 +1062,7 @@ class CMB2 extends CMB2_Base {
 	 * @since  2.0.0
 	 * @param  array  $field           Metabox field config array
 	 * @param  int    $position        (optional) Position of metabox. 1 for first, etc
-	 * @return mixed                   Field id or false
+	 * @return string|false            Field id or false
 	 */
 	public function add_field( array $field, $position = 0 ) {
 		if ( ! is_array( $field ) || ! array_key_exists( 'id', $field ) ) {

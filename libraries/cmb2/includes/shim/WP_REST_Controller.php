@@ -21,7 +21,7 @@ abstract class WP_REST_Controller {
 	 * Register the routes for the objects of the controller.
 	 */
 	public function register_routes() {
-		_doing_it_wrong( 'WP_REST_Controller::register_routes', __( 'The register_routes() method must be overriden' ), 'zeus-framework' );
+		_doing_it_wrong( 'WP_REST_Controller::register_routes', __( 'The register_routes() method must be overriden', 'zeus-framework' ) );
 	}
 
 	/**
@@ -81,7 +81,7 @@ abstract class WP_REST_Controller {
 	 * @return WP_Error|WP_REST_Response
 	 */
 	public function create_item( $request ) {
-		return new WP_Error( 'invalid-method', sprintf( __( "Method '%s' not implemented. Must be over-ridden in subclass." ), __METHOD__ ), array( 'status' => 405 ) );
+		return new WP_Error( 'invalid-method', sprintf( __( "Method '%s' not implemented. Must be over-ridden in subclass.", 'zeus-framework' ), __METHOD__ ), array( 'status' => 405 ) );
 	}
 
 	/**
@@ -91,7 +91,7 @@ abstract class WP_REST_Controller {
 	 * @return WP_Error|boolean
 	 */
 	public function update_item_permissions_check( $request ) {
-		return new WP_Error( 'invalid-method', sprintf( __( "Method '%s' not implemented. Must be over-ridden in subclass." ), __METHOD__ ), array( 'status' => 405 ) );
+		return new WP_Error( 'invalid-method', sprintf( __( "Method '%s' not implemented. Must be over-ridden in subclass.", 'zeus-framework' ), __METHOD__ ), array( 'status' => 405 ) );
 	}
 
 	/**
@@ -101,7 +101,7 @@ abstract class WP_REST_Controller {
 	 * @return WP_Error|WP_REST_Response
 	 */
 	public function update_item( $request ) {
-		return new WP_Error( 'invalid-method', sprintf( __( "Method '%s' not implemented. Must be over-ridden in subclass." ), __METHOD__ ), array( 'status' => 405 ) );
+		return new WP_Error( 'invalid-method', sprintf( __( "Method '%s' not implemented. Must be over-ridden in subclass.", 'zeus-framework' ), __METHOD__ ), array( 'status' => 405 ) );
 	}
 
 	/**

@@ -292,7 +292,7 @@ class CMB2_REST extends CMB2_Hookup_Base {
 	 * @return mixed
 	 */
 	public static function get_post_rest_values( $object, $field_name, $request, $object_type ) {
-		if ( 'cmb2' === $field_name ) {
+		if ( 'zeus-framework' === $field_name ) {
 			return self::get_rest_values( $object, $request, $object_type, 'post' );
 		}
 	}
@@ -310,7 +310,7 @@ class CMB2_REST extends CMB2_Hookup_Base {
 	 * @return mixed
 	 */
 	public static function get_user_rest_values( $object, $field_name, $request, $object_type ) {
-		if ( 'cmb2' === $field_name ) {
+		if ( 'zeus-framework' === $field_name ) {
 			return self::get_rest_values( $object, $request, $object_type, 'user' );
 		}
 	}
@@ -328,7 +328,7 @@ class CMB2_REST extends CMB2_Hookup_Base {
 	 * @return mixed
 	 */
 	public static function get_comment_rest_values( $object, $field_name, $request, $object_type ) {
-		if ( 'cmb2' === $field_name ) {
+		if ( 'zeus-framework' === $field_name ) {
 			return self::get_rest_values( $object, $request, $object_type, 'comment' );
 		}
 	}
@@ -346,7 +346,7 @@ class CMB2_REST extends CMB2_Hookup_Base {
 	 * @return mixed
 	 */
 	public static function get_term_rest_values( $object, $field_name, $request, $object_type ) {
-		if ( 'cmb2' === $field_name ) {
+		if ( 'zeus-framework' === $field_name ) {
 			return self::get_rest_values( $object, $request, $object_type, 'term' );
 		}
 	}
@@ -405,7 +405,7 @@ class CMB2_REST extends CMB2_Hookup_Base {
 	 * @return bool|int
 	 */
 	public static function update_post_rest_values( $values, $object, $field_name, $request, $object_type ) {
-		if ( 'cmb2' === $field_name ) {
+		if ( 'zeus-framework' === $field_name ) {
 			return self::update_rest_values( $values, $object, $request, $object_type, 'post' );
 		}
 	}
@@ -424,7 +424,7 @@ class CMB2_REST extends CMB2_Hookup_Base {
 	 * @return bool|int
 	 */
 	public static function update_user_rest_values( $values, $object, $field_name, $request, $object_type ) {
-		if ( 'cmb2' === $field_name ) {
+		if ( 'zeus-framework' === $field_name ) {
 			return self::update_rest_values( $values, $object, $request, $object_type, 'user' );
 		}
 	}
@@ -443,7 +443,7 @@ class CMB2_REST extends CMB2_Hookup_Base {
 	 * @return bool|int
 	 */
 	public static function update_comment_rest_values( $values, $object, $field_name, $request, $object_type ) {
-		if ( 'cmb2' === $field_name ) {
+		if ( 'zeus-framework' === $field_name ) {
 			return self::update_rest_values( $values, $object, $request, $object_type, 'comment' );
 		}
 	}
@@ -462,7 +462,7 @@ class CMB2_REST extends CMB2_Hookup_Base {
 	 * @return bool|int
 	 */
 	public static function update_term_rest_values( $values, $object, $field_name, $request, $object_type ) {
-		if ( 'cmb2' === $field_name ) {
+		if ( 'zeus-framework' === $field_name ) {
 			return self::update_rest_values( $values, $object, $request, $object_type, 'term' );
 		}
 	}

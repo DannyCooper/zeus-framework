@@ -54,7 +54,7 @@ if ( ! function_exists( 'zeus_footer_attribution' ) ) {
 	 */
 	function zeus_footer_attribution() {
 
-		$footer_attribution = __( 'Powered by the <a href="http://olympusthemes.com">Zeus Theme</a>.', 'zeus-framework' );
+		$footer_attribution = sprintf( __( 'Powered by the <a href="%1s">Zeus Theme</a>.', 'zeus-framework' ), 'http://olympusthemes.com' );
 
 		/*
 		 * Returns footer attribution html

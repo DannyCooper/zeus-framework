@@ -160,20 +160,20 @@ if ( ! class_exists( 'CMB2_Bootstrap_2231', false ) ) {
 		 */
 		public function l10ni18n() {
 
-			$loaded = load_plugin_textdomain( 'cmb2', false, '/languages/' );
+			$loaded = load_plugin_textdomain( 'zeus-framework', false, '/languages/' );
 
 			if ( ! $loaded ) {
-				$loaded = load_muplugin_textdomain( 'cmb2', '/languages/' );
+				$loaded = load_muplugin_textdomain( 'zeus-framework', '/languages/' );
 			}
 
 			if ( ! $loaded ) {
-				$loaded = load_theme_textdomain( 'cmb2', get_stylesheet_directory() . '/languages/' );
+				$loaded = load_theme_textdomain( 'zeus-framework', get_stylesheet_directory() . '/languages/' );
 			}
 
 			if ( ! $loaded ) {
 				$locale = apply_filters( 'plugin_locale', get_locale(), 'zeus-framework' );
 				$mofile = dirname( __FILE__ ) . '/languages/cmb2-' . $locale . '.mo';
-				load_textdomain( 'cmb2', $mofile );
+				load_textdomain( 'zeus-framework', $mofile );
 			}
 
 		}

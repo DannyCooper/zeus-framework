@@ -1,14 +1,32 @@
 <?php
+if ( ! class_exists( 'WP_REST_Controller' ) ) {
+	// Shim the WP_REST_Controller class if wp-api plugin not installed, & not in core.
+	require_once cmb2_dir( 'includes/shim/WP_REST_Controller.php' );
+}
 
-
-abstract class WP_REST_Controller {
+/**
+ * Creates CMB2 objects/fields endpoint for WordPres REST API.
+ * Allows access to fields registered to a specific post type and more.
+ *
+ * @todo  Add better documentation.
+ * @todo  Research proper schema.
+ *
+ * @since 2.2.3
+ *
+ * @category  WordPress_Plugin
+ * @package   CMB2
+ * @author    WebDevStudios
+ * @license   GPL-2.0+
+ * @link      http://webdevstudios.com
+ */
+abstract class CMB2_REST_Controller extends WP_REST_Controller {
 
 	/**
 	 * The namespace of this controller's route.
 	 *
 	 * @var string
 	 */
-	protected $namespace;
+	protected $namespace = CMB2_REST::NAME_SPACE;
 
 	/**
 	 * The base of this controller's route.
@@ -18,496 +36,393 @@ abstract class WP_REST_Controller {
 	protected $rest_base;
 
 	/**
-	 * Register the routes for the objects of the controller.
+	 * The current request object
+	 * @var WP_REST_Request $request
+	 * @since 2.2.3
 	 */
-	public function register_routes() {
-		_doing_it_wrong( 'WP_REST_Controller::register_routes', __( 'The register_routes() method must be overriden', 'zeus-framework' ) );
+	public $request;
+
+	/**
+	 * The current server object
+	 * @var WP_REST_Server $server
+	 * @since 2.2.3
+	 */
+	public $server;
+
+	/**
+	 * Box object id
+	 * @var   mixed
+	 * @since 2.2.3
+	 */
+	public $object_id = null;
+
+	/**
+	 * Box object type
+	 * @var   string
+	 * @since 2.2.3
+	 */
+	public $object_type = '';
+
+	/**
+	 * CMB2 Instance
+	 *
+	 * @var CMB2_REST
+	 */
+	protected $rest_box;
+
+	/**
+	 * CMB2_Field Instance
+	 *
+	 * @var CMB2_Field
+	 */
+	protected $field;
+
+	/**
+	 * The initial route
+	 * @var   string
+	 * @since 2.2.3
+	 */
+	protected static $route = '';
+
+	/**
+	 * Defines which endpoint the initial request is.
+	 * @var string $request_type
+	 * @since 2.2.3
+	 */
+	protected static $request_type = '';
+
+	/**
+	 * Constructor
+	 * @since 2.2.3
+	 */
+	public function __construct( WP_REST_Server $wp_rest_server ) {
+		$this->server = $wp_rest_server;
 	}
 
 	/**
-	 * Check if a given request has access to get items.
+	 * A wrapper for `apply_filters` which checks for box/field properties to hook to the filter.
 	 *
-	 * @param WP_REST_Request $request Full data about the request.
-	 * @return WP_Error|boolean
+	 * Checks if a CMB object callback property exists, and if it does,
+	 * hook it to the permissions filter.
+	 *
+	 * @since  2.2.3
+	 *
+	 * @param  string $filter         The name of the filter to apply.
+	 * @param  bool   $default_access The default access for this request.
+	 *
+	 * @return void
 	 */
-	public function get_items_permissions_check( $request ) {
-		return new WP_Error( 'invalid-method', sprintf( __( "Method '%s' not implemented. Must be over-ridden in subclass.", 'zeus-framework' ), __METHOD__ ), array( 'status' => 405 ) );
+	public function maybe_hook_callback_and_apply_filters( $filter, $default_access ) {
+		if ( ! $this->rest_box && $this->request->get_param( 'cmb_id' ) ) {
+			$this->rest_box = CMB2_REST::get_rest_box( $this->request->get_param( 'cmb_id' ) );
+		}
+
+		$default_access = $this->maybe_hook_registered_callback( $filter, $default_access );
+
+		/**
+		 * Apply the permissions check filter.
+		 *
+		 * @since 2.2.3
+		 *
+		 * @param bool   $default_access Whether this CMB2 endpoint can be accessed.
+		 * @param object $controller     This CMB2_REST_Controller object.
+		 */
+		$default_access = apply_filters( $filter, $default_access, $this );
+
+		$this->maybe_unhook_registered_callback( $filter );
+
+		return $default_access;
 	}
 
 	/**
-	 * Get a collection of items.
+	 * Checks if the CMB2 box has any registered callback parameters for the given filter.
 	 *
-	 * @param WP_REST_Request $request Full data about the request.
-	 * @return WP_Error|WP_REST_Response
+	 * The registered handlers will have a property name which matches the filter, except:
+	 * - The 'cmb2_api' prefix will be removed
+	 * - A '_cb' suffix will be added (to stay inline with other '*_cb' parameters).
+	 *
+	 * @since  2.2.3
+	 *
+	 * @param  string $filter      The filter name.
+	 * @param  bool   $default_val The default filter value.
+	 *
+	 * @return bool                The possibly-modified filter value (if the '*_cb' param is non-callable).
 	 */
-	public function get_items( $request ) {
-		return new WP_Error( 'invalid-method', sprintf( __( "Method '%s' not implemented. Must be over-ridden in subclass.", 'zeus-framework' ), __METHOD__ ), array( 'status' => 405 ) );
+	public function maybe_hook_registered_callback( $filter, $default_val ) {
+		if ( ! $this->rest_box || is_wp_error( $this->rest_box ) ) {
+			return $default_val;
+		}
+
+		// Hook box specific filter callbacks.
+		$val = $this->rest_box->cmb->maybe_hook_parameter( $filter, $default_val );
+		if ( null !== $val ) {
+			$default_val = $val;
+		}
+
+		return $default_val;
 	}
 
 	/**
-	 * Check if a given request has access to get a specific item.
+	 * Unhooks any CMB2 box registered callback parameters for the given filter.
 	 *
-	 * @param WP_REST_Request $request Full data about the request.
-	 * @return WP_Error|boolean
+	 * @since  2.2.3
+	 *
+	 * @param  string $filter The filter name.
+	 *
+	 * @return void
 	 */
-	public function get_item_permissions_check( $request ) {
-		return new WP_Error( 'invalid-method', sprintf( __( "Method '%s' not implemented. Must be over-ridden in subclass.", 'zeus-framework' ), __METHOD__ ), array( 'status' => 405 ) );
+	public function maybe_unhook_registered_callback( $filter ) {
+		if ( ! $this->rest_box || is_wp_error( $this->rest_box ) ) {
+			return;
+		}
+
+		// Unhook box specific filter callbacks.
+		$this->rest_box->cmb->maybe_hook_parameter( $filter, null, 'remove_filter' );
 	}
 
 	/**
-	 * Get one item from the collection.
+	 * Prepare a CMB2 object for serialization
 	 *
-	 * @param WP_REST_Request $request Full data about the request.
-	 * @return WP_Error|WP_REST_Response
+	 * @since 2.2.3
+	 *
+	 * @param  mixed $data
+	 * @return array $data
 	 */
-	public function get_item( $request ) {
-		return new WP_Error( 'invalid-method', sprintf( __( "Method '%s' not implemented. Must be over-ridden in subclass.", 'zeus-framework' ), __METHOD__ ), array( 'status' => 405 ) );
+	public function prepare_item( $data ) {
+		return $this->prepare_item_for_response( $data, $this->request );
 	}
 
 	/**
-	 * Check if a given request has access to create items.
+	 * Output buffers a callback and returns the results.
 	 *
-	 * @param WP_REST_Request $request Full data about the request.
-	 * @return WP_Error|boolean
+	 * @since  2.2.3
+	 *
+	 * @param  mixed $cb Callable function/method.
+	 * @return mixed     Results of output buffer after calling function/method.
 	 */
-	public function create_item_permissions_check( $request ) {
-		return new WP_Error( 'invalid-method', sprintf( __( "Method '%s' not implemented. Must be over-ridden in subclass.", 'zeus-framework' ), __METHOD__ ), array( 'status' => 405 ) );
+	public function get_cb_results( $cb ) {
+		$args = func_get_args();
+		array_shift( $args ); // ignore $cb
+		ob_start();
+		call_user_func_array( $cb, $args );
+
+		return ob_get_clean();
 	}
 
 	/**
-	 * Create one item from the collection.
+	 * Prepare the CMB2 item for the REST response.
 	 *
-	 * @param WP_REST_Request $request Full data about the request.
-	 * @return WP_Error|WP_REST_Response
-	 */
-	public function create_item( $request ) {
-		return new WP_Error( 'invalid-method', sprintf( __( "Method '%s' not implemented. Must be over-ridden in subclass.", 'zeus-framework' ), __METHOD__ ), array( 'status' => 405 ) );
-	}
-
-	/**
-	 * Check if a given request has access to update a specific item.
+	 * @since 2.2.3
 	 *
-	 * @param WP_REST_Request $request Full data about the request.
-	 * @return WP_Error|boolean
-	 */
-	public function update_item_permissions_check( $request ) {
-		return new WP_Error( 'invalid-method', sprintf( __( "Method '%s' not implemented. Must be over-ridden in subclass.", 'zeus-framework' ), __METHOD__ ), array( 'status' => 405 ) );
-	}
-
-	/**
-	 * Update one item from the collection.
-	 *
-	 * @param WP_REST_Request $request Full data about the request.
-	 * @return WP_Error|WP_REST_Response
-	 */
-	public function update_item( $request ) {
-		return new WP_Error( 'invalid-method', sprintf( __( "Method '%s' not implemented. Must be over-ridden in subclass.", 'zeus-framework' ), __METHOD__ ), array( 'status' => 405 ) );
-	}
-
-	/**
-	 * Check if a given request has access to delete a specific item.
-	 *
-	 * @param WP_REST_Request $request Full data about the request.
-	 * @return WP_Error|boolean
-	 */
-	public function delete_item_permissions_check( $request ) {
-		return new WP_Error( 'invalid-method', sprintf( __( "Method '%s' not implemented. Must be over-ridden in subclass.", 'zeus-framework' ), __METHOD__ ), array( 'status' => 405 ) );
-	}
-
-	/**
-	 * Delete one item from the collection.
-	 *
-	 * @param WP_REST_Request $request Full data about the request.
-	 * @return WP_Error|WP_REST_Response
-	 */
-	public function delete_item( $request ) {
-		return new WP_Error( 'invalid-method', sprintf( __( "Method '%s' not implemented. Must be over-ridden in subclass.", 'zeus-framework' ), __METHOD__ ), array( 'status' => 405 ) );
-	}
-
-	/**
-	 * Prepare the item for create or update operation.
-	 *
-	 * @param WP_REST_Request $request Request object.
-	 * @return WP_Error|object $prepared_item
-	 */
-	protected function prepare_item_for_database( $request ) {
-		return new WP_Error( 'invalid-method', sprintf( __( "Method '%s' not implemented. Must be over-ridden in subclass.", 'zeus-framework' ), __METHOD__ ), array( 'status' => 405 ) );
-	}
-
-	/**
-	 * Prepare the item for the REST response.
-	 *
-	 * @param mixed $item WordPress representation of the item.
-	 * @param WP_REST_Request $request Request object.
+	 * @param  mixed            $item     WordPress representation of the item.
+	 * @param  WP_REST_Request  $request  Request object.
 	 * @return WP_REST_Response $response
 	 */
-	public function prepare_item_for_response( $item, $request ) {
-		return new WP_Error( 'invalid-method', sprintf( __( "Method '%s' not implemented. Must be over-ridden in subclass.", 'zeus-framework' ), __METHOD__ ), array( 'status' => 405 ) );
+	public function prepare_item_for_response( $data, $request = null ) {
+		$data = $this->filter_response_by_context( $data, $this->request['context'] );
+
+		/**
+		 * Filter the prepared CMB2 item response.
+		 *
+		 * @since 2.2.3
+		 *
+		 * @param mixed  $data           Prepared data
+		 * @param object $request        The WP_REST_Request object
+		 * @param object $cmb2_endpoints This endpoints object
+		 */
+		return apply_filters( 'cmb2_rest_prepare', rest_ensure_response( $data ), $this->request, $this );
 	}
 
 	/**
-	 * Prepare a response for inserting into a collection.
+	 * Initiates the request property and the rest_box property if box is readable.
 	 *
-	 * @param WP_REST_Response $response Response object.
-	 * @return array Response data, ready for insertion into collection data.
+	 * @since  2.2.3
+	 *
+	 * @param  WP_REST_Request $request      Request object.
+	 * @param  string          $request_type A description of the type of request being made.
+	 *
+	 * @return void
 	 */
-	public function prepare_response_for_collection( $response ) {
-		if ( ! ( $response instanceof WP_REST_Response ) ) {
-			return $response;
+	protected function initiate_rest_read_box( $request, $request_type ) {
+		$this->initiate_rest_box( $request, $request_type );
+
+		if ( ! is_wp_error( $this->rest_box ) && ! $this->rest_box->rest_read ) {
+			$this->rest_box = new WP_Error( 'cmb2_rest_no_read_error', __( 'This box does not have read permissions.', 'zeus-framework' ), array( 'status' => 403 ) );
 		}
+	}
 
-		$data = (array) $response->get_data();
-		$server = rest_get_server();
+	/**
+	 * Initiates the request property and the rest_box property if box is writeable.
+	 *
+	 * @since  2.2.3
+	 *
+	 * @param  WP_REST_Request $request      Request object.
+	 * @param  string          $request_type A description of the type of request being made.
+	 *
+	 * @return void
+	 */
+	protected function initiate_rest_edit_box( $request, $request_type ) {
+		$this->initiate_rest_box( $request, $request_type );
 
-		if ( method_exists( $server, 'get_compact_response_links' ) ) {
-			$links = call_user_func( array( $server, 'get_compact_response_links' ), $response );
+		if ( ! is_wp_error( $this->rest_box ) && ! $this->rest_box->rest_edit ) {
+			$this->rest_box = new WP_Error( 'cmb2_rest_no_write_error', __( 'This box does not have write permissions.', 'zeus-framework' ), array( 'status' => 403 ) );
+		}
+	}
+
+	/**
+	 * Initiates the request property and the rest_box property.
+	 *
+	 * @since  2.2.3
+	 *
+	 * @param  WP_REST_Request $request      Request object.
+	 * @param  string          $request_type A description of the type of request being made.
+	 *
+	 * @return void
+	 */
+	protected function initiate_rest_box( $request, $request_type ) {
+		$this->initiate_request( $request, $request_type );
+
+		$this->rest_box = CMB2_REST::get_rest_box( $this->request->get_param( 'cmb_id' ) );
+
+		if ( ! $this->rest_box ) {
+
+			$this->rest_box = new WP_Error( 'cmb2_rest_box_not_found_error', __( 'No box found by that id. A box needs to be registered with the "show_in_rest" parameter configured.', 'zeus-framework' ), array( 'status' => 403 ) );
+
 		} else {
-			$links = call_user_func( array( $server, 'get_response_links' ), $response );
-		}
 
-		if ( ! empty( $links ) ) {
-			$data['_links'] = $links;
-		}
+			if ( isset( $this->request['object_id'] ) ) {
+				$this->rest_box->cmb->object_id( sanitize_text_field( $this->request['object_id'] ) );
+			}
 
-		return $data;
+			if ( isset( $this->request['object_type'] ) ) {
+				$this->rest_box->cmb->object_type( sanitize_text_field( $this->request['object_type'] ) );
+			}
+		}
 	}
 
 	/**
-	 * Filter a response based on the context defined in the schema.
+	 * Initiates the request property and sets up the initial static properties.
 	 *
-	 * @param array $data
-	 * @param string $context
-	 * @return array
+	 * @since  2.2.3
+	 *
+	 * @param  WP_REST_Request $request      Request object.
+	 * @param  string          $request_type A description of the type of request being made.
+	 *
+	 * @return void
 	 */
-	public function filter_response_by_context( $data, $context ) {
+	public function initiate_request( $request, $request_type ) {
+		$this->request = $request;
 
-		$schema = $this->get_item_schema();
-		foreach ( $data as $key => $value ) {
-			if ( empty( $schema['properties'][ $key ] ) || empty( $schema['properties'][ $key ]['context'] ) ) {
-				continue;
-			}
-
-			if ( ! in_array( $context, $schema['properties'][ $key ]['context'] ) ) {
-				unset( $data[ $key ] );
-				continue;
-			}
-
-			if ( 'object' === $schema['properties'][ $key ]['type'] && ! empty( $schema['properties'][ $key ]['properties'] ) ) {
-				foreach ( $schema['properties'][ $key ]['properties'] as $attribute => $details ) {
-					if ( empty( $details['context'] ) ) {
-						continue;
-					}
-					if ( ! in_array( $context, $details['context'] ) ) {
-						if ( isset( $data[ $key ][ $attribute ] ) ) {
-							unset( $data[ $key ][ $attribute ] );
-						}
-					}
-				}
-			}
+		if ( ! isset( $this->request['context'] ) || empty( $this->request['context'] ) ) {
+			$this->request['context'] = 'view';
 		}
 
-		return $data;
+		if ( ! self::$request_type ) {
+			self::$request_type = $request_type;
+		}
+
+		if ( ! self::$route ) {
+			self::$route = $this->request->get_route();
+		}
 	}
 
 	/**
-	 * Get the item's schema, conforming to JSON Schema.
+	 * Useful when getting `_embed`-ed items
+	 *
+	 * @since  2.2.3
+	 *
+	 * @return string  Initial requested type.
+	 */
+	public static function get_intial_request_type() {
+		return self::$request_type;
+	}
+
+	/**
+	 * Useful when getting `_embed`-ed items
+	 *
+	 * @since  2.2.3
+	 *
+	 * @return string  Initial requested route.
+	 */
+	public static function get_intial_route() {
+		return self::$route;
+	}
+
+	/**
+	 * Get CMB2 fields schema, conforming to JSON Schema
+	 *
+	 * @since 2.2.3
 	 *
 	 * @return array
 	 */
 	public function get_item_schema() {
-		return $this->add_additional_fields_schema( array() );
-	}
-
-	/**
-	 * Get the item's schema for display / public consumption purposes.
-	 *
-	 * @return array
-	 */
-	public function get_public_item_schema() {
-
-		$schema = $this->get_item_schema();
-
-		foreach ( $schema['properties'] as &$property ) {
-			if ( isset( $property['arg_options'] ) ) {
-				unset( $property['arg_options'] );
-			}
-		}
-
-		return $schema;
-	}
-
-	/**
-	 * Get the query params for collections.
-	 *
-	 * @return array
-	 */
-	public function get_collection_params() {
-		return array(
-			'context'                => $this->get_context_param(),
-			'page'                   => array(
-				'description'        => __( 'Current page of the collection.', 'zeus-framework' ),
-				'type'               => 'integer',
-				'default'            => 1,
-				'sanitize_callback'  => 'absint',
-				'validate_callback'  => 'rest_validate_request_arg',
-				'minimum'            => 1,
-			),
-			'per_page'               => array(
-				'description'        => __( 'Maximum number of items to be returned in result set.', 'zeus-framework' ),
-				'type'               => 'integer',
-				'default'            => 10,
-				'minimum'            => 1,
-				'maximum'            => 100,
-				'sanitize_callback'  => 'absint',
-				'validate_callback'  => 'rest_validate_request_arg',
-			),
-			'search'                 => array(
-				'description'        => __( 'Limit results to those matching a string.', 'zeus-framework' ),
-				'type'               => 'string',
-				'sanitize_callback'  => 'sanitize_text_field',
-				'validate_callback'  => 'rest_validate_request_arg',
+		$schema = array(
+			'$schema'              => 'http://json-schema.org/draft-04/schema#',
+			'title'                => 'CMB2',
+			'type'                 => 'object',
+			'properties'           => array(
+				'description' => array(
+					'description'  => __( 'A human-readable description of the object.', 'zeus-framework' ),
+					'type'         => 'string',
+					'context'      => array( 'view' ),
+					),
+					'name'             => array(
+						'description'  => __( 'The id for the object.', 'zeus-framework' ),
+						'type'         => 'integer',
+						'context'      => array( 'view' ),
+					),
+				'name' => array(
+					'description'  => __( 'The title for the object.', 'zeus-framework' ),
+					'type'         => 'string',
+					'context'      => array( 'view' ),
+				),
 			),
 		);
+
+		return $this->add_additional_fields_schema( $schema );
 	}
 
 	/**
-	 * Get the magical context param.
+	 * Return an array of contextual links for endpoint/object
+	 * @link http://v2.wp-api.org/extending/linking/
+	 * @link http://www.iana.org/assignments/link-relations/link-relations.xhtml
 	 *
-	 * Ensures consistent description between endpoints, and populates enum from schema.
+	 * @since  2.2.3
 	 *
-	 * @param array     $args
-	 * @return array
+	 * @param  mixed  $object Object to build links from.
+	 *
+	 * @return array          Array of links
 	 */
-	public function get_context_param( $args = array() ) {
-		$param_details = array(
-			'description'        => __( 'Scope under which the request is made; determines fields present in response.', 'zeus-framework' ),
-			'type'               => 'string',
-			'sanitize_callback'  => 'sanitize_key',
-			'validate_callback'  => 'rest_validate_request_arg',
+	abstract protected function prepare_links( $object );
+
+	/**
+	 * Get whitelisted query strings from URL for appending to link URLS.
+	 *
+	 * @since  2.2.3
+	 *
+	 * @return string URL query stringl
+	 */
+	public function get_query_string() {
+		$defaults = array(
+			'object_id'   => 0,
+			'object_type' => '',
+			'_rendered'   => '',
+			// '_embed'      => '',
 		);
-		$schema = $this->get_item_schema();
-		if ( empty( $schema['properties'] ) ) {
-			return array_merge( $param_details, $args );
-		}
-		$contexts = array();
-		foreach ( $schema['properties'] as $attributes ) {
-			if ( ! empty( $attributes['context'] ) ) {
-				$contexts = array_merge( $contexts, $attributes['context'] );
-			}
-		}
-		if ( ! empty( $contexts ) ) {
-			$param_details['enum'] = array_unique( $contexts );
-			rsort( $param_details['enum'] );
-		}
-		return array_merge( $param_details, $args );
-	}
 
-	/**
-	 * Add the values from additional fields to a data object.
-	 *
-	 * @param array  $object
-	 * @param WP_REST_Request $request
-	 * @return array modified object with additional fields.
-	 */
-	protected function add_additional_fields_to_object( $object, $request ) {
+		$query_string = '';
 
-		$additional_fields = $this->get_additional_fields();
-
-		foreach ( $additional_fields as $field_name => $field_options ) {
-
-			if ( ! $field_options['get_callback'] ) {
-				continue;
-			}
-
-			$object[ $field_name ] = call_user_func( $field_options['get_callback'], $object, $field_name, $request, $this->get_object_type() );
-		}
-
-		return $object;
-	}
-
-	/**
-	 * Update the values of additional fields added to a data object.
-	 *
-	 * @param array  $object
-	 * @param WP_REST_Request $request
-	 */
-	protected function update_additional_fields_for_object( $object, $request ) {
-
-		$additional_fields = $this->get_additional_fields();
-
-		foreach ( $additional_fields as $field_name => $field_options ) {
-
-			if ( ! $field_options['update_callback'] ) {
-				continue;
-			}
-
-			// Don't run the update callbacks if the data wasn't passed in the request.
-			if ( ! isset( $request[ $field_name ] ) ) {
-				continue;
-			}
-
-			call_user_func( $field_options['update_callback'], $request[ $field_name ], $object, $field_name, $request, $this->get_object_type() );
-		}
-	}
-
-	/**
-	 * Add the schema from additional fields to an schema array.
-	 *
-	 * The type of object is inferred from the passed schema.
-	 *
-	 * @param array $schema Schema array.
-	 */
-	protected function add_additional_fields_schema( $schema ) {
-		if ( empty( $schema['title'] ) ) {
-			return $schema;
-		}
-
-		/**
-		 * Can't use $this->get_object_type otherwise we cause an inf loop.
-		 */
-		$object_type = $schema['title'];
-
-		$additional_fields = $this->get_additional_fields( $object_type );
-
-		foreach ( $additional_fields as $field_name => $field_options ) {
-			if ( ! $field_options['schema'] ) {
-				continue;
-			}
-
-			$schema['properties'][ $field_name ] = $field_options['schema'];
-		}
-
-		return $schema;
-	}
-
-	/**
-	 * Get all the registered additional fields for a given object-type.
-	 *
-	 * @param  string $object_type
-	 * @return array
-	 */
-	protected function get_additional_fields( $object_type = null ) {
-
-		if ( ! $object_type ) {
-			$object_type = $this->get_object_type();
-		}
-
-		if ( ! $object_type ) {
-			return array();
-		}
-
-		global $wp_rest_additional_fields;
-
-		if ( ! $wp_rest_additional_fields || ! isset( $wp_rest_additional_fields[ $object_type ] ) ) {
-			return array();
-		}
-
-		return $wp_rest_additional_fields[ $object_type ];
-	}
-
-	/**
-	 * Get the object type this controller is responsible for managing.
-	 *
-	 * @return string
-	 */
-	protected function get_object_type() {
-		$schema = $this->get_item_schema();
-
-		if ( ! $schema || ! isset( $schema['title'] ) ) {
-			return null;
-		}
-
-		return $schema['title'];
-	}
-
-	/**
-	 * Get an array of endpoint arguments from the item schema for the controller.
-	 *
-	 * @param string $method HTTP method of the request. The arguments
-	 *                       for `CREATABLE` requests are checked for required
-	 *                       values and may fall-back to a given default, this
-	 *                       is not done on `EDITABLE` requests. Default is
-	 *                       WP_REST_Server::CREATABLE.
-	 * @return array $endpoint_args
-	 */
-	public function get_endpoint_args_for_item_schema( $method = WP_REST_Server::CREATABLE ) {
-
-		$schema                = $this->get_item_schema();
-		$schema_properties     = ! empty( $schema['properties'] ) ? $schema['properties'] : array();
-		$endpoint_args = array();
-
-		foreach ( $schema_properties as $field_id => $params ) {
-
-			// Arguments specified as `readonly` are not allowed to be set.
-			if ( ! empty( $params['readonly'] ) ) {
-				continue;
-			}
-
-			$endpoint_args[ $field_id ] = array(
-				'validate_callback' => 'rest_validate_request_arg',
-				'sanitize_callback' => 'rest_sanitize_request_arg',
-			);
-
-			if ( isset( $params['description'] ) ) {
-				$endpoint_args[ $field_id ]['description'] = $params['description'];
-			}
-
-			if ( WP_REST_Server::CREATABLE === $method && isset( $params['default'] ) ) {
-				$endpoint_args[ $field_id ]['default'] = $params['default'];
-			}
-
-			if ( WP_REST_Server::CREATABLE === $method && ! empty( $params['required'] ) ) {
-				$endpoint_args[ $field_id ]['required'] = true;
-			}
-
-			foreach ( array( 'type', 'format', 'enum' ) as $schema_prop ) {
-				if ( isset( $params[ $schema_prop ] ) ) {
-					$endpoint_args[ $field_id ][ $schema_prop ] = $params[ $schema_prop ];
+		foreach ( $defaults as $key => $value ) {
+			if ( isset( $this->request[ $key ] ) ) {
+				$query_string .= $query_string ? '&' : '?';
+				$query_string .= $key;
+				if ( $value = sanitize_text_field( $this->request[ $key ] ) ) {
+					$query_string .= '=' . $value;
 				}
 			}
-
-			// Merge in any options provided by the schema property.
-			if ( isset( $params['arg_options'] ) ) {
-
-				// Only use required / default from arg_options on CREATABLE endpoints.
-				if ( WP_REST_Server::CREATABLE !== $method ) {
-					$params['arg_options'] = array_diff_key( $params['arg_options'], array( 'required' => '', 'default' => '' ) );
-				}
-
-				$endpoint_args[ $field_id ] = array_merge( $endpoint_args[ $field_id ], $params['arg_options'] );
-			}
 		}
 
-		return $endpoint_args;
+		return $query_string;
 	}
 
-	/**
-	 * Retrieves post data given a post ID or post object.
-	 *
-	 * This is a subset of the functionality of the `get_post()` function, with
-	 * the additional functionality of having `the_post` action done on the
-	 * resultant post object. This is done so that plugins may manipulate the
-	 * post that is used in the REST API.
-	 *
-	 * @see get_post()
-	 * @global WP_Query $wp_query
-	 *
-	 * @param int|WP_Post $post Post ID or post object. Defaults to global $post.
-	 * @return WP_Post|null A `WP_Post` object when successful.
-	 */
-	public function get_post( $post ) {
-		$post_obj = get_post( $post );
-
-		/**
-		 * Filter the post.
-		 *
-		 * Allows plugins to filter the post object as returned by `\WP_REST_Controller::get_post()`.
-		 *
-		 * @param WP_Post|null $post_obj  The post object as returned by `get_post()`.
-		 * @param int|WP_Post  $post      The original value used to obtain the post object.
-		 */
-		$post = apply_filters( 'rest_the_post', $post_obj, $post );
-
-		return $post;
-	}
 }

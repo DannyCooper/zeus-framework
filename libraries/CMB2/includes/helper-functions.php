@@ -25,7 +25,7 @@ function cmb2_dir( $path = '' ) {
  * @param  string $class_name Name of the class being requested
  */
 function cmb2_autoload_classes( $class_name ) {
-	if ( 0 !== strpos( $class_name, 'zeus-framework' ) ) {
+	if ( 0 !== strpos( $class_name, 'CMB2' ) ) {
 		return;
 	}
 

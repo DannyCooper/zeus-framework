@@ -687,45 +687,70 @@ select {
     list-style: none;
 }
 
-.menu-primary ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-.menu-primary ul li {
+.zeus-nav-horizontal li  {
     position: relative;
+    display: inline-block;
 }
 
-.menu-primary ul ul {
+.zeus-nav-horizontal li a {
+	padding: 15px 20px;
+}
+
+.zeus-nav-horizontal .sub-menu {
     position: absolute;
     z-index: 99;
     top: 100%;
     left: 0;
     display: none;
-    min-width: 12em; /* allow long menu items to determine submenu width */
-    box-shadow: 2px 2px 6px rgba(0,0,0,.2);
+    max-width: 12em; /* allow long menu items to determine submenu width */
+	margin: 0;
+	background: #191919;
 }
 
-.menu-primary ul > li {
+.zeus-nav-horizontal.right .sub-menu {
+    right: 0; /* stops the nav leaving the viewport */
+	left: auto
+}
+
+.zeus-nav-horizontal .sub-menu li a {
+	color: #c1c1c1
+}
+
+.zeus-nav-horizontal .sub-menu li a {
+	color: #eaeaea;
+}
+
+.zeus-nav-horizontal .sub-menu > li {
     -webkit-transition: background .2s;
             transition: background .2s;
     white-space: nowrap; /* no need for Supersubs plugin */
 }
 
-.menu-primary ul li:hover > ul,
-.menu-primary ul li.sfHover > ul {
+.zeus-nav-horizontal .sub-menu:hover {
+	background:#0d842b;
+}
+
+.zeus-nav-horizontal .sub-menu .sub-menu:hover {
+	background:#0B7024;
+}
+
+
+.zeus-nav-horizontal li:hover > .sub-menu,
+.zeus-nav-horizontal li.sfHover > .sub-menu {
     display: block;
 }
 
-.menu-primary ul a {
-    position: relative;
-    display: block;
-}
 
-.menu-primary ul ul ul {
+.zeus-nav-horizontal .sub-menu .sub-menu {
     top: 0;
     left: 100%;
+	background: #191919
+}
+
+.zeus-nav-horizontal.right .sub-menu .sub-menu {
+    top: 0;
+    right: 100%;
+	left: auto
 }
 
 .menu-primary .menu li {
@@ -812,6 +837,45 @@ select {
 
 .tinynav {
     display: none;
+}
+
+/*----- Zeus Horizontal Navigation -----*/
+
+.zeus-nav-horizontal {
+	margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.zeus-nav-horizontal li {
+	margin: 0;
+}
+
+.zeus-nav-horizontal > li:hover {
+	background: #eaeaea;
+	color:#373737
+}
+
+.zeus-nav-horizontal > li:last-child {
+	margin-right: 0;
+}
+
+.zeus-nav-horizontal li a {
+	display: block;
+	text-decoration: none;
+}
+
+
+/*----- Zeus Vertical Navigation -----*/
+
+.zeus-nav-vert {
+	margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.zeus-nav-vert li a {
+	text-decoration: none;
 }
 
 /*--------------------------------------------------------------
@@ -1295,7 +1359,7 @@ ol.comment-list li.comment ul.children {
     color: #717171;
 }
 
-.sub-footer-inner {
+.sub-footer .wrap {
     border-top: 1px solid #dbdbdb;
     padding: 16px 0;
 }
@@ -1471,14 +1535,7 @@ table tbody > tr:last-child > td {
 --------------------------------------------------------------*/
 
 .clear:after,
-.entry-content:after,
-.comment-content:after,
-.site-header:after,
-.menu-primary:after,
-.site-content:after,
-.site-footer:after,
-.footer-widgets:after,
-.sub-footer-inner:after {
+.wrap:after {
     content: ' ';
     display: block;
     clear: both;

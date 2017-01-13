@@ -37,12 +37,10 @@ if ( ! function_exists( 'zeus_sub_footer' ) ) {
 	function zeus_sub_footer() {
 		echo '<div class="sub-footer">';
 			echo '<div class="wrap">';
-				echo '<div class="sub-footer-inner">';
 					/**
 					 * Sub Footer Hook
 					 */
 					do_action( 'zeus_sub_footer' );
-				echo '</div><!-- .sub-footer-inner -->';
 			echo '</div><!-- .wrap -->';
 		echo '</div><!-- .sub-footer -->';
 	}

@@ -42,12 +42,16 @@ if ( ! function_exists( 'zeus_nav_inner' ) ) {
 
 		echo apply_filters( 'zeus_nav_wrapper_open', '<div class="wrap">' );
 
-			wp_nav_menu(
-				array(
-					'theme_location' => 'primary',
-					'container' => false,
-				)
-			);
+			do_action( 'zeus_nav_menu_before' );
+
+				wp_nav_menu(
+					array(
+						'theme_location' => 'menu-1',
+						'container' => false,
+					)
+				);
+
+			do_action( 'zeus_nav_menu_after' );
 
 		echo apply_filters( 'zeus_nav_wrapper_open', '</div>' );
 

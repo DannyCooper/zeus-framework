@@ -21,7 +21,9 @@ if ( ! function_exists( 'zeus_content_area' ) ) {
 			/**
 			 * Content area hook
 			 *
-			 * @hooked zeus_loop - 20
+			 * @hooked zeus_archive_header - 5
+			 * @hooked zeus_search_header - 5
+			 * @hooked zeus_loop - 10
 			 */
 			do_action( 'zeus_content' );
 

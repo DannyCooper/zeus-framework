@@ -38,10 +38,10 @@ add_action( 'zeus_content', 'zeus_loop', 10 );
 add_action( 'zeus_content', 'zeus_content_paging_nav', 20 );
 
 // Archive Page Hooks.
-add_action( 'zeus_loop_before', 'zeus_archive_header', 20 );
+add_action( 'zeus_content', 'zeus_archive_header', 5 );
 
 // Search Page Hooks.
-add_action( 'zeus_loop_before', 'zeus_search_header', 20 );
+add_action( 'zeus_content', 'zeus_search_header', 5 );
 
 // Sidebar Hooks.
 add_action( 'zeus_sidebar', 'zeus_sidebar_inner' );

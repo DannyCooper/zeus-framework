@@ -47,6 +47,7 @@ if ( ! function_exists( 'zeus_nav_inner' ) ) {
 				wp_nav_menu(
 					array(
 						'theme_location' => 'menu-1',
+						'menu_class' => 'zeus-nav-horizontal left',
 						'container' => false,
 					)
 				);

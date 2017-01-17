@@ -675,7 +675,7 @@ select {
 # Navigation
 --------------------------------------------------------------*/
 
-.menu-primary .menu {
+.menu-primary .zeus-nav-horizontal {
     font-size: 14px;
     border-top: 1px solid #dbdbdb;
     border-bottom: 1px solid #dbdbdb;
@@ -726,15 +726,6 @@ select {
     white-space: nowrap; /* no need for Supersubs plugin */
 }
 
-.zeus-nav-horizontal .sub-menu:hover {
-	background:#0d842b;
-}
-
-.zeus-nav-horizontal .sub-menu .sub-menu:hover {
-	background:#0B7024;
-}
-
-
 .zeus-nav-horizontal li:hover > .sub-menu,
 .zeus-nav-horizontal li.sfHover > .sub-menu {
     display: block;
@@ -753,13 +744,13 @@ select {
 	left: auto
 }
 
-.menu-primary .menu li {
+.menu-primary .zeus-nav-horizontal li {
     display: inline-block;
     margin: 0;
     list-style: none;
 }
 
-.menu-primary .menu li a {
+.menu-primary .zeus-nav-horizontal li a {
     display: block;
     padding: 16px;
     transition: all linear .15s;
@@ -775,20 +766,20 @@ select {
     margin-left: 0;
 }
 
-.menu-primary .menu li:hover > a,
-.menu-primary .menu .current-item > a {
+.menu-primary .zeus-nav-horizontal li:hover > a,
+.menu-primary .zeus-nav-horizontal .current-item > a {
     text-decoration: none;
 }
 
 /*----- Top Level -----*/
 
-.menu-primary .menu > li {
+.menu-primary .zeus-nav-horizontal > li {
     position: relative;
     display: inline-block;
 }
 
-.menu-primary .menu > li:hover > a,
-.menu-primary .menu > .current-item > a {
+.menu-primary .zeus-nav-horizontal > li:hover > a,
+.menu-primary .zeus-nav-horizontal > .current-item > a {
     color: #a5a5a5;
 }
 
@@ -818,6 +809,10 @@ select {
     display: block;
     color: white;
     border-top: 1px solid #585858;
+}
+
+.menu-primary .sub-menu li:first-child a{
+    border-top: 0;
 }
 
 .menu-primary .sub-menu li a:hover,

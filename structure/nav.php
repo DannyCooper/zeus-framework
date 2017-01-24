@@ -16,7 +16,7 @@ if ( ! function_exists( 'zeus_nav' ) ) {
 		*/
 		do_action( 'zeus_nav_before' );
 
-			echo apply_filters( 'zeus_nav_open', '<nav '. zeus_get_attr( 'menu', 'primary' ) .'">');
+			echo apply_filters( 'zeus_nav_open', '<nav '. zeus_get_attr( 'menu', 'primary' ) .'>');
 
 				/**
 				* Navigation Hook

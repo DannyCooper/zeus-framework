@@ -33,7 +33,7 @@ function zeus() {
 			 */
 			do_action( 'zeus_header_before' );
 
-			echo apply_filters( 'zeus_header_open', '<header '. zeus_get_attr( 'header' ) .'">');
+			echo apply_filters( 'zeus_header_open', '<header '. zeus_get_attr( 'header' ) .'>');
 
 					do_action( 'zeus_header_wrapper_before' );
 

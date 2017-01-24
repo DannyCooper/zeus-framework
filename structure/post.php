@@ -259,16 +259,14 @@ if ( ! function_exists( 'zeus_content_paging_nav' ) ) {
 	 */
 	function zeus_content_paging_nav() {
 
-		global $wp_query;
-
 		if ( is_single() ) {
 			return;
 		}
 
 		$args = array(
 			'type'         => 'list',
-			'next_text' => _x( 'Next', 'Next post', 'zeus-framework' ) . ' &rarr;',
-			'prev_text' => '&larr; ' . _x( 'Previous', 'Previous post', 'zeus-framework' ),
+			'next_text' => _x( 'Next &rarr;', 'Next post', 'zeus-framework' ),
+			'prev_text' => _x( '&larr; Previous', 'Previous post', 'zeus-framework' ),
 		);
 
 		the_posts_pagination( $args );
@@ -400,7 +398,7 @@ if ( ! function_exists( 'zeus_comments_link' ) ) {
 
 		if ( ! comments_open() ) {
 
-			echo '<span class="">Comments Closed</span>';
+			echo '<span class="">'.__( 'Comments Closed', 'zeus-framework' ).'</span>';
 			return;
 		}
 

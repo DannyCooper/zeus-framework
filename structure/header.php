@@ -19,9 +19,10 @@ if ( ! function_exists( 'zeus_head' ) ) {
 		<meta charset="<?php echo get_bloginfo( 'charset' ); ?>">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="profile" href="http://gmpg.org/xfn/11">
-		<link rel="pingback" href="<?php echo get_bloginfo( 'pingback_url' ) ?>">
 
 		<?php
+
+		zeus_link_pingback();
 
 		/**
 		 * Fires before wp_head
@@ -36,6 +37,16 @@ if ( ! function_exists( 'zeus_head' ) ) {
 
 		<?php
 
+	}
+}
+
+if ( ! function_exists( 'zeus_link_pingback' ) ) {
+	/**
+	 * Adds the pingback link to the header.
+	 */
+	function zeus_link_pingback() {
+		if ( 'open' === get_option( 'default_ping_status' ) )
+			printf( '<link rel="pingback" href="%s" />' . "\n", esc_url( get_bloginfo( 'pingback_url' ) ) );
 	}
 }
 
@@ -74,7 +85,7 @@ if ( ! function_exists( 'zeus_header_image' ) ) {
 	function zeus_header_image() {
 
 		echo '<a href="'. esc_url( home_url( '/' ) ) .'" rel="home">';
-			echo '<img src="'.get_header_image().'" width="'.esc_attr( get_custom_header()->width ) .'" height="'.  esc_attr( get_custom_header()->height ) .'" alt="">';
+			echo '<img src="'.esc_url( get_header_image() ).'" width="'.esc_attr( get_custom_header()->width ) .'" height="'.  esc_attr( get_custom_header()->height ) .'" alt="">';
 			zeus_site_title();
 		echo '</a>';
 	}
@@ -105,8 +116,6 @@ if ( ! function_exists( 'zeus_custom_header_setup' ) ) {
 	 * Set up the WordPress core custom header feature.
 	 *
 	 * @uses zeus_header_style()
-	 * @uses zeus_admin_header_style()
-	 * @uses zeus_admin_header_image()
 	 */
 	function zeus_custom_header_setup() {
 		add_theme_support( 'custom-header', apply_filters( 'zeus_custom_header_args', array(
@@ -158,34 +167,6 @@ if ( ! function_exists( 'zeus_header_style' ) ) {
 			color: #<?php echo esc_attr( $header_text_color ); ?>;
 		}
 	<?php endif; ?>
-	</style>
-	<?php
-	}
-}
-
-if ( ! function_exists( 'zeus_admin_header_style' ) ) {
-	/**
-	 * Styles the header image displayed on the Appearance > Header admin panel.
-	 *
-	 * @see zeus_custom_header_setup().
-	 */
-	function zeus_admin_header_style() {
-	?>
-	<style type="text/css">
-		.appearance_page_custom-header #headimg {
-			border: none;
-		}
-		#headimg h1,
-		#desc {
-		}
-		#headimg h1 {
-		}
-		#headimg h1 a {
-		}
-		#desc {
-		}
-		#headimg img {
-		}
 	</style>
 	<?php
 	}

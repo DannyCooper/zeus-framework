@@ -96,9 +96,6 @@ if ( ! function_exists( 'zeus_bypostauthor' ) ) {
 if ( ! function_exists( 'zeus_comments_nav' ) ) {
 	/**
 	 * Output the comment navigation.
-	 *
-	 * Can be overwritten  by adding a file named entry-meta.php to /template-parts in your
-	 * theme or child theme.
 	 */
 	function zeus_comments_nav() {
 

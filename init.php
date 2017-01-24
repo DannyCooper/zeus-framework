@@ -80,7 +80,6 @@ class Zeus_Framework {
 	function structure() {
 
 		include_once ZEUS_FRAMEWORK_DIR . '/structure/wrapper.php';
-		include_once ZEUS_FRAMEWORK_DIR . '/structure/general.php';
 		include_once ZEUS_FRAMEWORK_DIR . '/structure/header.php';
 		include_once ZEUS_FRAMEWORK_DIR . '/structure/nav.php';
 		include_once ZEUS_FRAMEWORK_DIR . '/structure/post.php';
